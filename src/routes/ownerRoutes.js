@@ -18,9 +18,7 @@ router.route("/owners/room")
     .post(Owners);
 
 router.route("/owners/room/:roomId")
-    .put(Owners);
-
-router.route("/owners/room/:roomId")
+    .put(Owners)
     .delete(Owners);
 
 router.route("/owners/booking/accept")

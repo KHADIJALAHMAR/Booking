@@ -39,7 +39,7 @@
 	_ get("/hotels/accepted") 		// access by admin			Admins.getAcceptedHotels
 	_ get("/hotels/refused") 		// access by admin			Admins.getRefusededHotels
 	_ put("/hotels/:hotelId") 		// access only by owner			Owners.updateHotel
-	_ delete("/hotels/:hotelId") 		// access only by owner			Owners.updateHotel
+	_ delete("/hotels/:hotelId") 		// access only by owner			Owners.deleteHotel
 	_ post("/hotels/filterByName") 	// access by everyone			Hotels.getHotelsByName
 	_ post("/hotels/filterByCity") 	// access by everyone			Hotels.getHotelsByCity
 	_ post("/hotels/filterByStars") 	// access by everyone			Hotels.getHotelsByStars

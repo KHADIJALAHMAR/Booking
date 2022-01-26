@@ -5,24 +5,24 @@ const router = express.Router();
 const Owners = require("../controllers/Owners");
 
 // routes
-router.route("/owners/accepted")
+router.route("/accepted")
     .get(Owners.getAcceptedOwners);
 
-router.route("/owners/refused")
+router.route("/refused")
     .get(Owners.getRefusedOwners);
 
-router.route("/owners/banned")
+router.route("/banned")
     .get(Owners.getBannedOwners);
 
-router.route("/owners/room")
+router.route("/room")
     .post(Owners.createRoom);
 
-router.route("/owners/room/:roomId")
+router.route("/room/:roomId")
     .put(Owners.updateRoom)
     .delete(Owners.deleteRoom);
 
-router.route("/owners/booking/accept")
+router.route("/booking/accept")
     .put(Owners.acceptBooking);
 
-router.route("/owners/booking/refuse")
+router.route("/booking/refuse")
     .put(Owners.refuseBooking);

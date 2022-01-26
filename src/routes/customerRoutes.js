@@ -4,8 +4,13 @@ const router = express.Router();
 // Requering Customer Controller
 
 const Customers = require ('../controllers/Customers')
+const Admins    = require ('../controllers/Admins')
 
 // routes______________________________________________//
+
+router
+.route('/customers/banned')
+.get(Admins.getBannedCustomers);
 
 router
 .route('/customers')
@@ -21,7 +26,7 @@ router
 
 router
 .route('/customers/booking/pay')
-.delete(Customers.payBooking)
+.delete(Customers.payBooking);
 
 
 

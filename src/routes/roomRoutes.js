@@ -8,5 +8,5 @@ const Rooms = require('../controllers/Rooms');
 router.route("/rooms")
     .get(Rooms)
 
-router.route("/rooms/folterByPrice")
+router.route("/rooms/filterByPrice")
     .post(Rooms)

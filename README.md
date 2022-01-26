@@ -27,23 +27,23 @@
 	_ put("/admin/hotel/refuse") 		// access only by admin (give it hotelId)		Admins.refuseHotel
 	
 ### - customerRoutes : 
-	_ get("/customers/banned") 		// access only by admin					Admins.getBannedCustomers
-	_ get("/customers")			// access by everyone					Customers.getCustomers
-	_ post("/customers/booking") 		// add a booking access					Customers.createBooking
-	_ put("/customers/booking/:bookingId")	// access only by customer				Customers.updateBooking
-	_ put("/customers/booking/pay")		// include giving the payment mode as request		Customers.payBooking
-	
+	_ get("/customers/banned") 		          // access only by admin					                Admins.getBannedCustomers
+	_ get("/customers")			                // access by everyone				                  	Customers.getCustomers
+	_ post("/customers/booking") 	      	  // add a booking access				                	Customers.createBooking
+	_ put("/customers/booking/:bookingId")	// access only by customer			               	Customers.updateBooking
+	_ put("/customers/booking/pay")	      	// include giving the payment mode as request		Customers.payBooking
+	   
 ### - hotelRoutes : 
-	_ post("/hotels") 			// add an hotel access only by owner	        Owners.createHotel	
-	_ get("/hotels") 			// access by everyone			        Hotels.getHotels
-	_ get("/hotels/accepted") 		// access by admin			        Admins.getAcceptedHotels
-	_ get("/hotels/refused") 		// access by admin			        Admins.getRefusededHotels
-	_ put("/hotels/:hotelId") 		// access only by owner			        Owners.updateHotel
-	_ delete("/hotels/:hotelId") 		// access only by owner			        Owners.deleteHotel
-	_ post("/hotels/filterByName") 	        // access by everyone			        Hotels.getHotelsByName
-	_ post("/hotels/filterByCity") 	        // access by everyone			        Hotels.getHotelsByCity
-	_ post("/hotels/filterByStars") 	// access by everyone			        Hotels.getHotelsByStars
-	_ delete("/hotels/delete") 		// access only by AD and OW (give it hotelId)	Hotels.deleteHotel
+	_ post("/hotels") 			                // add an hotel access only by owner	          Owners.createHotel	
+	_ get("/hotels") 		                  	// access by everyone			                      Hotels.getHotels
+	_ get("/hotels/accepted") 		          // access by admin			                        Admins.getAcceptedHotels
+	_ get("/hotels/refused") 	            	// access by admin			                        Admins.getRefusededHotels
+	_ put("/hotels/:hotelId") 	           	// access only by owner			                    Owners.updateHotel
+	_ delete("/hotels/:hotelId") 	        	// access only by owner			                    Owners.deleteHotel
+	_ post("/hotels/filterByName") 	        // access by everyone			                      Hotels.getHotelsByName
+	_ post("/hotels/filterByCity") 	        // access by everyone			                      Hotels.getHotelsByCity
+	_ post("/hotels/filterByStars") 	      // access by everyone			                      Hotels.getHotelsByStars
+	_ delete("/hotels/delete") 	           	// access only by AD and OW (give it hotelId) 	Hotels.deleteHotel
 
 ### - roomRoutes :	
 	_ get("/rooms") 			// access by everyone give it hotelId		Rooms.getRooms

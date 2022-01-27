@@ -12,31 +12,50 @@ const getAcceptedOwners = (req, res) => {
     }
     if (users) {
       let owner = {};
+      let ownerAccepted = "";
       users.forEach((user) => {
-        owner = {
-          username: user.username,
-          email: user.email,
-          password: user.password,
-          geder: user.gender,
-          name: user.role.name,
-          status: user.role.status,
-        };
-      });
-      if (owner.name == "owner" || owner.status == true) {
-        res.json({
-          message: "This owner is accepted",
-          owner,
-        });
-      } else if (owner.name == "owner" || owner.status == false) {
-        res.json({
-          message: "This owner is not accepted",
-        });
-      }
+        if (user.role.status == true) {
+          owner = {
+            username: user.username,
+            email: user.email,
+            password: user.password,
+            gender: user.gender,
+            roleName: user.role.name,
+            status: user.role.status,
+          };
+        }
+    });
+    res.json(owner);
     }
   });
 };
 
-const getRefusedOwners = (req, res) => {};
+const getRefusedOwners = (req, res) => {
+    User.find((err, users) => {
+        if (err) {
+          res.json({
+            error: err,
+          });
+        }
+        if (users) {
+          let owner = {};
+          let ownerAccepted = "";
+          users.forEach((user) => {
+            if (user.role.status == false) {
+              owner = {
+                username: user.username,
+                email: user.email,
+                password: user.password,
+                gender: user.gender,
+                roleName: user.role.name,
+                status: user.role.status,
+              };
+            }
+        });
+        res.json(owner);
+        }
+      });
+};
 
 const getBannedOwners = (req, res) => {};
 

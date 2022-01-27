@@ -8,23 +8,23 @@ const Owners = require("../controllers/Owners");
 router.route("/accepted")
     .get(Owners.getAcceptedOwners);
 
-router.route("/refused")
-    .get(Owners.getRefusedOwners);
+// router.route("/refused")
+//     .get(Owners.getRefusedOwners);
 
-router.route("/banned")
-    .get(Owners.getBannedOwners);
+// router.route("/banned")
+//     .get(Owners.getBannedOwners);
 
-router.route("/room")
-    .post(Owners.createRoom);
+// router.route("/room")
+//     .post(Owners.createRoom);
 
-router.route("/room/:roomId")
-    .put(Owners.updateRoom)
-    .delete(Owners.deleteRoom);
+// router.route("/room/:roomId")
+//     .put(Owners.updateRoom)
+//     .delete(Owners.deleteRoom);
 
-router.route("/booking/accept")
-    .put(Owners.acceptBooking);
+// router.route("/booking/accept")
+//     .put(Owners.acceptBooking);
 
-router.route("/booking/refuse")
-    .put(Owners.refuseBooking);
+// router.route("/booking/refuse")
+//     .put(Owners.refuseBooking);
 
 module.exports = router;

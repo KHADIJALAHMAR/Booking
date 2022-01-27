@@ -14,14 +14,14 @@ const RoomSchema = new mongoose.Schema({
   price: {
     type: Number,
   },
-  hotel_id: {
+  hotel_id: [{
     type: Schema.Types.ObjectId,
     ref: "Hotel",
-  },
-  room_type_id: {
+  }],
+  room_type_id: [{
     type: Schema.Types.ObjectId,
     ref: "RoomType",
-  },
+  }],
 });
 
 const Room = mongoose.model("Room", RoomSchema);

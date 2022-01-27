@@ -9,4 +9,6 @@ router.route("/rooms")
     .get(Rooms.getRooms)
 
 router.route("/rooms/filterByPrice")
-    .post(Rooms.getRoomsByPrice)
+    .post(Rooms.getRoomsByPrice);
+
+module.exports = router;

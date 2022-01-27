@@ -1,9 +1,8 @@
 const express = require('express');
-const { get } = require('express/lib/response');
 const router = express.Router();
-const ControllerHotel =require('../controllers/Hotels');
-const ControllerOwner =require ('../controllers/Owners');
-const ControllerAdmin =require('../controllers/Admins');
+const Hotels =require('../controllers/Hotels');
+const Owners =require ('../controllers/Owners');
+const Admins =require('../controllers/Admins');
 
 
 
@@ -11,28 +10,29 @@ const ControllerAdmin =require('../controllers/Admins');
 
 
 router.route("/hotels") 
-.get(ControllerHotel.getHotelsl)
-.post(ControllerHotel.createHotel);
+.get(Hotels.getHotelsl)
+.post(Hotels.createHotel);
 
 router.route("/hotels/accepted") 
-.get(ControllerAdmin.getAcceptedHotels);
+.get(Admins.getAcceptedHotels);
 
 router.route("/hotels/refused")
-.get(ControllerAdmin.getRefusededHotels);
+.get(Admins.getRefusededHotels);
 
 router.route("/hotels/:hotelId") 
-put(ControllerOwner.updateHotel);
-// delete(ControllerOwner.updateHotel);
+put( Owners.updateHotel);
+delete( Owners.updateHotel);
 
 router.route("/hotels/filterByName")
-poste(ControllerHotel.getHotelsByName);
+post(Hotels.getHotelsByName);
 
 router.route("/hotels/filterByCity")
-poste(ControllerHotel.getHotelsByCity);
+post(Hotels.getHotelsByCity);
 
 router.route("/hotels/filterByStars")
-poste(ControllerHotel.getHotelsByStars);
+post(Hotels.getHotelsByStars);
 
 router.route("/hotels/delete/hotelId") 	
-// delete(ControllerHotel.deleteHotel);
+delete(Hotels.deleteHotel);
 
+module.exports = router;

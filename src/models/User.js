@@ -1,6 +1,16 @@
 const mongoose = require("mongoose");
 
-// create Shema
+const RoleSchema = new mongoose.Schema({
+    name: {
+      type: String,
+      required: true
+    },
+    status: {
+      type: Boolean
+    }
+});
+
+// create Schema
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -18,10 +28,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  role: {
-    type: String,
-    default: "customer"
-  },
+  role: RoleSchema,
 
 });
 

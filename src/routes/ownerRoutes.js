@@ -26,3 +26,5 @@ router.route("/booking/accept")
 
 router.route("/booking/refuse")
     .put(Owners.refuseBooking);
+
+module.exports = router;

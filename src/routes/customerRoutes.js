@@ -9,23 +9,23 @@ const Admins    = require ('../controllers/Admins')
 // routes______________________________________________//
 
 router
-.route('/customers/banned')
+.route('/banned')
 .get(Admins.getBannedCustomers);
 
 router
-.route('/customers')
+.route('/')
 .get(Customers.getCustomers);
 
 router
-.route('customers/booking')
+.route('/booking')
 .post(Customers.createBooking);
 
 router
-.route('/customers/booking/:bookingId')
+.route('/booking/:bookingId')
 .put(Customers.updateBooking);
 
 router
-.route('/customers/booking/pay')
+.route('/booking/pay')
 .delete(Customers.payBooking);
 
 

@@ -51,5 +51,5 @@
 	
 
 ### - bookingRoutes :
-	_ get("/bookings")			// access by owners						Bookings.getBookings
-	_ delete("/bookings/delete") 		// access only by owner and the booking's owner (customer) 	Bookings.deleteBooking
+	_ get("/bookings")		        	// access by owners					                                   	 Bookings.getBookings
+	_ delete("/bookings/delete") 		// access only by owner and the booking's owner (customer)       Bookings.deleteBooking

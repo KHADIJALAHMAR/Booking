@@ -1,8 +1,4 @@
 const mongoose = require("mongoose");
-// require Hotel model
-const Hotel = require("./Hotel");
-// require RoomType model
-const RoomType = require("./RoomType");
 
 // create Shema
 const RoomSchema = new mongoose.Schema({

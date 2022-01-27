@@ -15,20 +15,12 @@ router
 .put( Admins.refuseOwner )
 
 router
-.route('/owner/ban')
-.put( Admins.banOwner )
+.route('/user/ban')
+.put( Admins.banUser )
 
 router
-.route('/owner/unban')
-.put( Admins.unbanOwner )
-
-router
-.route('/customer/ban')
-.put( Admins.banCustomer )
-
-router
-.route('/customer/unban')
-.put( Admins.unbanCustomer )
+.route('/user/unban')
+.put( Admins.unbanUser )
 
 router
 .route('/hotel/accept')

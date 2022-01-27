@@ -9,30 +9,30 @@ const Admins =require('../controllers/Admins');
 
 
 
-router.route("/hotels") 
+router.route("hotels") 
 .get(Hotels.getHotelsl)
 .post(Hotels.createHotel);
 
-router.route("/hotels/accepted") 
+router.route("hotels/accepted") 
 .get(Admins.getAcceptedHotels);
 
-router.route("/hotels/refused")
+router.route("hotels/refused")
 .get(Admins.getRefusededHotels);
 
-router.route("/hotels/:hotelId") 
-put( Owners.updateHotel);
-delete( Owners.updateHotel);
+router.route("hotels/:hotelId") 
+.put( Owners.updateHotel)
+.delete( Owners.updateHotel);
 
-router.route("/hotels/filterByName")
-post(Hotels.getHotelsByName);
+router.route("hotels/filterByName")
+.post(Hotels.getHotelsByName);
 
-router.route("/hotels/filterByCity")
-post(Hotels.getHotelsByCity);
+router.route("hotels/filterByCity")
+.post(Hotels.getHotelsByCity);
 
-router.route("/hotels/filterByStars")
-post(Hotels.getHotelsByStars);
+router.route("hotels/filterByStars")
+.post(Hotels.getHotelsByStars);
 
-router.route("/hotels/delete/hotelId") 	
-delete(Hotels.deleteHotel);
+router.route("hotels/delete/hotelId") 	
+.delete(Hotels.deleteHotel);
 
 module.exports = router;

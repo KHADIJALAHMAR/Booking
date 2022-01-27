@@ -23,7 +23,7 @@ const BookingSchema = new mogoose.Schema({
   },
 
   paid:{
-    type:Number,
+    type:Boolean,
   },
 
   _user:{

@@ -10,7 +10,7 @@ const BookingRoomSchema = new mogoose.Schema({
 
   _room
 :{
-    type:mongoose.Schema.ObjectId, ref: 'room'
+    type:mongoose.Schema.ObjectId, ref: 'Room'
   },
 
   rooms_quantity:

@@ -27,7 +27,7 @@ const BookingSchema = new mogoose.Schema({
   },
 
   _user:{
-    type: mongoose.Schema.Types.ObjectId, ref: 'user'
+    type: mongoose.Schema.Types.ObjectId, ref: 'User'
   }
 
 })

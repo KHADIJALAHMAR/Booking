@@ -2,7 +2,7 @@ const express = require("express");
 
 // user model
 const { User, Room } = require("../models");
-
+// To optimize
 const getAcceptedOwners = (req, res) => {
   User.find((err, users) => {
     if (err) {
@@ -11,11 +11,10 @@ const getAcceptedOwners = (req, res) => {
       });
     }
     if (users) {
-      let owner = {};
-      let ownerAccepted = "";
+      let owners = [];
       users.forEach((user) => {
         if (user.role.status == true) {
-          owner = {
+          let owner = {
             username: user.username,
             email: user.email,
             password: user.password,
@@ -23,13 +22,14 @@ const getAcceptedOwners = (req, res) => {
             roleName: user.role.name,
             status: user.role.status,
           };
+          owners.push(owner);
         }
       });
-      res.json(owner);
+      res.json(owners);
     }
   });
 };
-
+// To optimize
 const getRefusedOwners = (req, res) => {
   User.find((err, users) => {
     if (err) {
@@ -82,14 +82,35 @@ const createRoom = (req, res) => {
         message: `new room created`,
       });
     })();
-    } catch (error) {
+  } catch (error) {
     res.json(err);
   }
 };
 
-const updateRoom = (req, res) => {};
+const updateRoom = async (req, res) => {
+  const roomId = req.params.roomId;
+  try {
+    await Room.findByIdAndUpdate(roomId, req.body);
+    const room = await Room.findOne({ _id: roomId });
+    res.json({
+      message: "room updated !!",
+      room,
+    });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
 
-const deleteRoom = (req, res) => {};
+const deleteRoom = async (req, res) => {
+  const roomId = req.params.roomId;
+  try {
+    const room = await Room.findByIdAndDelete(roomId);
+    if (!room) res.status(404).json({ message: "no room found" });
+    res.json({ message: "room deleted successfully !!" });
+  } catch (error) {
+    res.json(error);
+  }
+};
 
 const acceptBooking = (req, res) => {};
 

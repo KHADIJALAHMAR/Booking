@@ -26,7 +26,7 @@ const BookingSchema = new mogoose.Schema({
     type:Boolean,
   },
 
-  _user:{
+  id_user:{
     type: mongoose.Schema.Types.ObjectId, ref: 'User'
   }
 

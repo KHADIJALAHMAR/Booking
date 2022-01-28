@@ -1,7 +1,6 @@
-
 const mogoose = require('mongoose');
 
-// create booking schema
+// create bookingroom schema
 
 const BookingRoomSchema = new mogoose.Schema({
   _booking :
@@ -32,7 +31,7 @@ const BookingRoomSchema = new mogoose.Schema({
   
 })
 
-// creating the model booking
+// creating the model bookingroom
 const BookingRoom = mongoose.model('BookingRoom', BookingRoomSchema);
 
 module.exports = BookingRoom

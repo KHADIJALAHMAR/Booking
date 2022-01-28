@@ -1,8 +1,4 @@
 const mongoose = require("mongoose");
-// require Hotel model
-const Hotel = require("./Hotel");
-// require RoomType model
-const RoomType = require("./RoomType");
 
 // create Shema
 const RoomSchema = new mongoose.Schema({
@@ -18,16 +14,16 @@ const RoomSchema = new mongoose.Schema({
   price: {
     type: Number,
   },
-  hotel_id: {
-    type: Schema.Types.ObjectId,
+  hotel_id: [{
+    type: mongoose.Schema.Types.ObjectId,
     ref: "Hotel",
-  },
-  room_type_id: {
-    type: Schema.Types.ObjectId,
+  }],
+  room_type_id: [{
+    type: mongoose.Schema.Types.ObjectId,
     ref: "RoomType",
-  },
+  }],
 });
 
-const Room = mongoose.model("Romm", RoomSchema);
+const Room = mongoose.model("Room", RoomSchema);
 
 module.exports = Room;

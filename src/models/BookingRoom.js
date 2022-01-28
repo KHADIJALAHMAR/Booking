@@ -1,11 +1,11 @@
-const mogoose = require('mongoose');
+const mongoose = require('mongoose');
 
 // create bookingroom schema
 
-const BookingRoomSchema = new mogoose.Schema({
+const BookingRoomSchema = new mongoose.Schema({
   id_booking :
   {
-    type:mogoose.Schema.Types.ObjectId, ref: 'Booking'
+    type:mongoose.Schema.Types.ObjectId, ref: 'Booking'
   },
 
   id_room

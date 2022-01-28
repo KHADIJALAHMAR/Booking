@@ -15,11 +15,11 @@ const RoomSchema = new mongoose.Schema({
     type: Number,
   },
   hotel_id: [{
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "Hotel",
   }],
   room_type_id: [{
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "RoomType",
   }],
 });

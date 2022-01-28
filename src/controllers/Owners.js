@@ -11,11 +11,10 @@ const getAcceptedOwners = (req, res) => {
       });
     }
     if (users) {
-      let owner = {};
-      let ownerAccepted = "";
+      let owners = [];
       users.forEach((user) => {
         if (user.role.status == true) {
-          owner = {
+          let owner = {
             username: user.username,
             email: user.email,
             password: user.password,
@@ -23,9 +22,10 @@ const getAcceptedOwners = (req, res) => {
             roleName: user.role.name,
             status: user.role.status,
           };
+          owners.push(owner);
         }
-      });
-      res.json(owner);
+    });
+    res.json(owners);
     }
   });
 };
@@ -82,7 +82,7 @@ const createRoom = (req, res) => {
         message: `new room created`,
       });
     })();
-    } catch (error) {
+  } catch (error) {
     res.json(err);
   }
 };

@@ -91,7 +91,7 @@ const updateRoom = async (req, res) => {
   const roomId = req.params.roomId;
   try {
     await Room.findByIdAndUpdate(roomId, req.body);
-    const room = await Room.findOne({_id: roomId});
+    const room = await Room.findOne({ _id: roomId });
     res.json({
       message: "room updated !!",
       room,
@@ -101,7 +101,16 @@ const updateRoom = async (req, res) => {
   }
 };
 
-const deleteRoom = (req, res) => {};
+const deleteRoom = async (req, res) => {
+  const roomId = req.params.roomId;
+  try {
+    const room = await Room.findByIdAndDelete(roomId);
+    if (!room) res.status(404).json({ message: "no room found" });
+    res.json({ message: "room deleted successfully !!" });
+  } catch (error) {
+    res.json(error);
+  }
+};
 
 const acceptBooking = (req, res) => {};
 

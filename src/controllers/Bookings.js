@@ -1,18 +1,30 @@
-const db = require('../models')
+const {Booking} = require('../models')
 
-// get all Booking
-const getBookings = (req, res ) =>{
-  db.Booking.findAll().then((bookings) =>
-     res.send(bookings))
+// Get all Booking
+const getBookings = async (req, res ) =>{
+  try{
 
-}
+    const bookings = await  Booking.find()
+    res.json(bookings);
+
+  } catch (error){
+    res.status(400).json({error:error.message});
+  }
+};
 
 
-// 
-const deleteBooking = (req, res) =>{
-  db.Booking.destroy({
-    where:{
-      id: req.params.id
+// Delete Booking
+const deleteBooking = async (req, res) => { 
+  try {
+      await Booking.deleteOne(req.body.id);
+
+      res.json('DELETE Booking');
+    } catch (error) {
+      res.status(400).json({error:error.message});
     }
-  }).then(() => res.send('success'))
+};
+
+module.exports = {
+  getBookings,
+  deleteBooking
 }

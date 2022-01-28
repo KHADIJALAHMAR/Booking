@@ -2,7 +2,7 @@ const express = require("express");
 
 // user model
 const { User, Room } = require("../models");
-
+// To optimize
 const getAcceptedOwners = (req, res) => {
   User.find((err, users) => {
     if (err) {
@@ -24,12 +24,12 @@ const getAcceptedOwners = (req, res) => {
           };
           owners.push(owner);
         }
-    });
-    res.json(owners);
+      });
+      res.json(owners);
     }
   });
 };
-
+// To optimize
 const getRefusedOwners = (req, res) => {
   User.find((err, users) => {
     if (err) {
@@ -87,7 +87,19 @@ const createRoom = (req, res) => {
   }
 };
 
-const updateRoom = (req, res) => {};
+const updateRoom = async (req, res) => {
+  const roomId = req.params.roomId;
+  try {
+    await Room.findByIdAndUpdate(roomId, req.body);
+    const room = await Room.findOne({_id: roomId});
+    res.json({
+      message: "room updated !!",
+      room,
+    });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
 
 const deleteRoom = (req, res) => {};
 

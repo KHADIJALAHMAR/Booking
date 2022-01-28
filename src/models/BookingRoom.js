@@ -3,12 +3,12 @@ const mogoose = require('mongoose');
 // create bookingroom schema
 
 const BookingRoomSchema = new mogoose.Schema({
-  _booking :
+  id_booking :
   {
     type:mogoose.Schema.Types.ObjectId, ref: 'booking'
   },
 
-  _room
+  id_room
 :{
     type:mongoose.Schema.ObjectId, ref: 'Room'
   },

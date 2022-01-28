@@ -1,9 +1,9 @@
 
-const mogoose = require('mongoose');
+const mongoose = require('mongoose');
 
 // create booking schema
 
-const BookingSchema = new mogoose.Schema({
+const BookingSchema = new mongoose.Schema({
   date_from :{
     type: Date,
     required: true

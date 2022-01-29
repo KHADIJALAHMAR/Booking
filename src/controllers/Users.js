@@ -1,5 +1,8 @@
+require('dotenv').config();
 const { User } = require('../models');
-const { returnErrorAsResponse } = require('../functions')
+const jwt = require('jsonwebtoken');
+const { returnErrorAsResponse , returnMessageAsResponse } = require('../functions');
+
 // handling register
 const handleRegister = (req,res) => {
 
@@ -56,16 +59,36 @@ const handleRegister = (req,res) => {
                 gender: infos[5], 
                 role: infos[4] === 'owner' ? {name: infos[4] , status: false } : {name: infos[4] }
             });
-            res.status(201).json({message: 'User created successfully'});
+            returnMessageAsResponse(res,'User created successfully');
         })();
     }catch(err) {
-            res.status(400).json({error: err.message});
+        returnErrorAsResponse(res,err.message)
     }
 }
 
 // handling Login
 const handleLogin = (req,res) => {
-    
+    (async () =>{
+        if(typeof req.body.email === 'undefined') { returnErrorAsResponse(res,'please enter an email') }
+        const user = await User.findOne({email: req.body.email});
+        if (!user) {
+            returnErrorAsResponse(res,'email is not found');
+        }else if(typeof req.body.password === 'undefined'){
+            returnErrorAsResponse(res,'please enter your password');
+        }else{
+            await user.comparePasswords(req.body.password).then((result) => {
+                if (!result) {
+                    returnErrorAsResponse(res,'password is incorrect');
+                }else{
+                    const id = user._id;
+                    const role = user.role;
+                    const accessToken = jwt.sign({id,role},process.env.JWT_ACCESS_SECRET);
+                    res.cookie('token', accessToken, {httpOnly: true});
+                    res.json({accessToken});
+                }
+            }).catch((err) => returnErrorAsResponse(res,err.message))
+        }  
+    })();
 }
 
 module.exports = {

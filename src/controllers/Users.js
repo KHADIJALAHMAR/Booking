@@ -14,18 +14,37 @@ const handleRegister = (req,res) => {
         /*[5]*/req.body.gender
     ];
 
-    if (infos[0].length < 6 || infos[0].length > 20) {
-        returnErrorAsResponse(res,'username must be between 6 and 20 characters');
-    }else if (!infos[1].toLowerCase().match(email_regex)) {
-        returnErrorAsResponse(res,'invalid email format');
-    }else if (infos[2].length < 6 || infos[2].length > 30) {
-        returnErrorAsResponse(res,'password must be between 6 and 30 characters');
-    }else if (infos[2] !== infos[3]) {
-        returnErrorAsResponse(res,'passwords are not Identical');
-    }else if (infos[4] !== 'owner' || infos[4] !== 'admin' || infos[4] !== 'customer' ) {
-        returnErrorAsResponse(res,'not a valid role');
-    }else if (infos[5] !== 'male' || infos[5] !== 'female' ) {
-        returnErrorAsResponse(res,'not a valid gender');
+    // checking for username
+    if(typeof infos[0] === 'undefined'){ 
+        returnErrorAsResponse(res,'you must enter a username') 
+    }
+    else if (infos[0].length < 6 || infos[0].length > 20) { 
+        returnErrorAsResponse(res,'username must be between 6 and 20 characters') 
+    }
+    // checking for email
+    else if (typeof infos[1] === 'undefined') { 
+        returnErrorAsResponse(res,'you must enter an email') 
+    }
+    else if (!infos[1].toLowerCase().match(email_regex)) { 
+        returnErrorAsResponse(res,'invalid email format') 
+    }
+    // checking for password
+    else if (typeof infos[2] === 'undefined') { 
+        returnErrorAsResponse(res,'you must enter a password') 
+    }
+    else if (infos[2].length < 6 || infos[2].length > 30) { 
+        returnErrorAsResponse(res,'password must be between 6 and 30 characters') 
+    }
+    else if (infos[2] !== infos[3]) { 
+        returnErrorAsResponse(res,'passwords are not Identical') 
+    }
+    // checking for role
+    else if (infos[4] !== 'owner' && infos[4] !== 'admin' && infos[4] !== 'customer' ) { 
+        returnErrorAsResponse(res,'not a valid role') 
+    }
+    // checking for gender
+    else if (infos[5] !== 'male' && infos[5] !== 'female' ) { 
+        returnErrorAsResponse(res,'not a valid gender') 
     }
     
     try{

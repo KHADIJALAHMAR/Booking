@@ -1,7 +1,7 @@
 const { Hotel , User } = require('../models');
 // accept an Owner
 const acceptOwner = (req,res) => {
-
+    res.status(200).json({message: 'you are in accept owner callback'})
 }
 
 // refuse an Owner

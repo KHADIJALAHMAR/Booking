@@ -4,7 +4,42 @@ const { Hotel, User } = require("../models");
 const createUser = (req, res) => {};
 
 // update owner infos
-const updateUser = (req, res) => {};
+const updateUser = (req, res) => {
+  const ownerId = req.params.ownerId;
+  const userInfos = {
+    username: req.body.username,
+    email: req.body.email,
+    role: {
+      name: req.body.role.name,
+    },
+  };
+  try {
+    if (userInfos.role.name == "admin") {
+      res.json({
+        message: "you canno't set the role admin!",
+      });
+    } else if (userInfos.role.name == "owner") {
+      userInfos.role.status = "false";
+      User.findByIdAndUpdate(ownerId, userInfos, function (err, ownerUpdated) {
+        if (err) console.log(err);
+        res.json({
+          message: "owner is updated successfully !!",
+          owner: ownerUpdated,
+        });
+      });
+    } else {
+      User.findByIdAndUpdate(ownerId, userInfos, function (err, ownerUpdated) {
+        if (err) console.log(err);
+        res.json({
+          message: "owner is updated successfully !!",
+          owner: ownerUpdated,
+        });
+      });
+    }
+  } catch (error) {
+    res.json({ error: error.message });
+  }
+};
 
 // delete owner
 const deleteUser = (req, res) => {

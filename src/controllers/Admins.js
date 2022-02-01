@@ -1,17 +1,17 @@
 const { Hotel , User } = require('../models');
 
 // create an owner 
-const createOwner = (req,res) => {
+const createUser = (req,res) => {
     
 }
 
 // update owner infos
-const updateOwner = (req,res) => {
+const updateUser = (req,res) => {
     
 }
 
 // delete owner
-const deleteOwner = (req,res) => {
+const deleteUser = (req,res) => {
     
 }
 
@@ -62,9 +62,9 @@ const getRefusedHotels = (req,res) => {
 }
 
 module.exports = {
-    createOwner,
-    updateOwner,
-    deleteOwner,
+    createUser,
+    updateUser,
+    deleteUser,
     acceptOwner,
     refuseOwner,
     banUser,

@@ -82,8 +82,4 @@ module.exports = {
   getHotels,
   searchFilters,
   deleteHotel,
-  // getHotelsByName,
-  // getHotelsByCity,
-  // getHotelsByStars
-  
 }

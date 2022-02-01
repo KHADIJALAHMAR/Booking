@@ -1,7 +1,7 @@
 require('dotenv').config();
 const { User } = require('../models');
 const jwt = require('jsonwebtoken');
-const { returnErrorAsResponse , returnMessageAsResponse } = require('../functions');
+const { returnErrorAsResponse , returnMessageAsResponse , returnRegisterError} = require('../functions');
 
 // handling register
 const handleRegister = (req,res) => {
@@ -19,20 +19,22 @@ const handleRegister = (req,res) => {
         returnErrorAsResponse(res,'passwords are not Identical') 
     }
     
-    try{
+    
         (async () =>{
-            await User.create({
-                username: infos[0], 
-                email: infos[1], 
-                password: infos[2], 
-                gender: infos[5], 
-                role: infos[4] === 'owner' ? {name: infos[4] , status: false } : {name: infos[4] }
-            });
-            returnMessageAsResponse(res,'User created successfully');
+            try{
+                await User.create({
+                    username: infos[0], 
+                    email: infos[1], 
+                    password: infos[2], 
+                    gender: infos[5], 
+                    role: infos[4] === 'owner' ? {name: infos[4] , status: false } : {name: infos[4] }
+                });
+                returnMessageAsResponse(res,'User created successfully');
+            }catch(err) {
+                returnRegisterError(res,err.message)
+            }
         })();
-    }catch(err) {
-        returnErrorAsResponse(res,err.message)
-    }
+    
 }
 
 // handling Login

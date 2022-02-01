@@ -10,7 +10,7 @@ const BookingRoomSchema = new mongoose.Schema({
 
   id_room
 :{
-    type:mongoose.Schema.ObjectId, ref: 'Room'
+    type:mongoose.Schema.Types.ObjectId, ref: 'Room'
   },
 
   rooms_quantity:

@@ -16,7 +16,7 @@ const getBookings = async (req, res ) =>{
 // Delete Booking
 const deleteBooking = async (req, res) => { 
 
-  await Booking.deleteOne({id :req.params.id});  
+  await Booking.findOneAndDelete({id :req.params.id});  
 
   try {
       res.status(200).json({message:"The Booking was Deleted With Success"});

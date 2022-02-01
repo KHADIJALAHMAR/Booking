@@ -5,7 +5,7 @@ const ControllerBooking =require('../controllers/Bookings');
 
 
 router.route("/")
-get(ControllerBooking.getBookings);
-delete(ControllerBooking.deleteBooking);
+.get(ControllerBooking.getBookings)
+.delete(ControllerBooking.deleteBooking);
 
 

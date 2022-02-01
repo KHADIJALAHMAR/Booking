@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
+// reuiring Authorization By Roles Middleware
+const {authorizeWithRole} = require('../middlewares/authorizeUser')
+
 // requiring controllers
 const Admins = require('../controllers/Admins');
 
@@ -8,7 +11,7 @@ const Admins = require('../controllers/Admins');
 
 router
 .route('/owner/accept')
-.put( Admins.acceptOwner )
+.put( authorizeWithRole('customer'), Admins.acceptOwner )
 
 router
 .route('/owner/refuse')

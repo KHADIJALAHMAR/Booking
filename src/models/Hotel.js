@@ -24,7 +24,7 @@ const HotelSchema = new mongoose.Schema({
         default: false
     },
     userId :{
-        type :Schema.Types.ObjectId,
+        type :mongoose.Schema.Types.ObjectId,
         ref : "User"
     }
 });

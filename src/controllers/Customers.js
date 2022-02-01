@@ -1,4 +1,4 @@
-const {user} =require('../models'); 
+const {User} =require('../models'); 
 
 
 
@@ -6,8 +6,12 @@ const {user} =require('../models');
 
 
 const getCustomers = (req, res) =>{
-    user.findAll({}, function (err, user) {
-        user[user.role] = user;
+    User.find( function (err, user) {
+       console.log(user);
     });
 
   }
+
+module.exports ={
+    getCustomers,
+}

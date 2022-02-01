@@ -111,40 +111,27 @@ const deleteRoom = async (req, res) => {
   }
 };
 
-const acceptBooking = async (req, res) => {
+const acceptBooking = (req, res) => {
   // I must do function for changing status of booking from true to false
   let bookingId = req.body.bookingId;
+  const roomId = req.body.roomId;
   try {
     // get rooms have the same booking_id
-    const roomWithSameIdBooking = await BookingRoom.findOne({
-      booking_id: bookingId,
-    });
-
-    if (roomWithSameIdBooking.id_room) {
-      Booking.findOne({ _id: bookingId }, function (err, result) {
+    BookingRoom.findOne(
+      { booking_id: bookingId, room_id: roomId },
+      function (err, room) {
         if (err) console.log(err);
-        if (result) {
-          if (result.status == false) {
-            Booking.findByIdAndUpdate(
-              bookingId,
-              { status: true },
-              function (err, data) {
-                if (err) console.log(err.message);
-                res.status(200).json({
-                  message: "booking is accepted !!",
-                });
-              }
-            );
-          }
-        }
-      });
-    }
+        res.json({ room });
+      }
+    );
   } catch (error) {
     res.json(error.message);
   }
 };
 
-const refuseBooking = (req, res) => {};
+const refuseBooking = (req, res) => {
+  
+};
 
 module.exports = {
   getAcceptedOwners,

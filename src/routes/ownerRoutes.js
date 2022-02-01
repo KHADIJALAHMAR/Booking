@@ -1,30 +1,31 @@
 const express = require("express");
 const router = express.Router();
+const {authorizeWithRole} = require('../middlewares/authorizeUser');
 
 // controller
 const Owners = require("../controllers/Owners");
 
 // routes
 router.route("/accepted")
-    .get(Owners.getAcceptedOwners);
+    .get(authorizeWithRole("admin"), Owners.getAcceptedOwners);
 
 router.route("/refused")
-    .get(Owners.getRefusedOwners);
+    .get(authorizeWithRole("admin"), Owners.getRefusedOwners);
 
 router.route("/banned")
-    .get(Owners.getBannedOwners);
+    .get(authorizeWithRole("admin"), Owners.getBannedOwners);
 
 router.route("/room")
-    .post(Owners.createRoom);
+    .post(authorizeWithRole("owner"), Owners.createRoom);
 
 router.route("/room/:roomId")
-    .put(Owners.updateRoom)
-    .delete(Owners.deleteRoom);
+    .put(authorizeWithRole("owner"), Owners.updateRoom)
+    .delete(authorizeWithRole("owner"), Owners.deleteRoom);
 
 router.route("/booking/accept")
-    .put(Owners.acceptBooking);
+    .put(authorizeWithRole("owner"), Owners.acceptBooking);
 
 router.route("/booking/refuse")
-    .put(Owners.refuseBooking);
+    .put(authorizeWithRole("owner"), Owners.refuseBooking);
 
 module.exports = router;

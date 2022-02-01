@@ -43,11 +43,11 @@ const updateUser = (req, res) => {
 
 // delete owner
 const deleteUser = (req, res) => {
-  const ownerId = req.body.ownerId;
-  User.findOneAndDelete({ _id: ownerId }, function (err, result) {
+  const userId = req.body.userId;
+  User.findOneAndDelete({ _id: userId }, function (err, result) {
     if (err) console.log(err);
     res.json({
-      message: "owner is deleted successfully !",
+      message: "user is deleted successfully !",
       result: result,
     });
   });

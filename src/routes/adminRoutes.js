@@ -11,7 +11,7 @@ const Admins = require('../controllers/Admins');
 
 router
 .route('/owner/accept')
-.put( authorizeWithRole('customer'), Admins.acceptOwner )
+.put( authorizeWithRole('admin'), Admins.acceptOwner )
 
 router
 .route('/owner/refuse')

@@ -10,7 +10,7 @@ const Admins    = require ('../controllers/Admins')
 
 router
 .route('/banned')
-.get(Admins.getBannedCustomers);
+.get(Admins.getBannedUsers);
 
 router
 .route('/')

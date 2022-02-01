@@ -1,4 +1,20 @@
 const { Hotel , User } = require('../models');
+
+// create an owner 
+const createOwner = (req,res) => {
+    
+}
+
+// update owner infos
+const updateOwner = (req,res) => {
+    
+}
+
+// delete owner
+const deleteOwner = (req,res) => {
+    
+}
+
 // accept an Owner
 const acceptOwner = (req,res) => {
     res.status(200).json({message: 'you are in accept owner callback'})
@@ -46,6 +62,9 @@ const getRefusedHotels = (req,res) => {
 }
 
 module.exports = {
+    createOwner,
+    updateOwner,
+    deleteOwner,
     acceptOwner,
     refuseOwner,
     banUser,

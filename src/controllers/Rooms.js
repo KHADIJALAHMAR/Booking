@@ -1,4 +1,6 @@
+const res = require('express/lib/response');
 const {RoomType} = require('../models');
+const { find } = require('../models/Booking');
 
 
 const createRoomType = async (req ,res) => {
@@ -22,3 +24,17 @@ const createRoomType = async (req ,res) => {
         res.status(400).json(err);
     }
 };
+
+
+
+const getRoomType = async (req ,res ) =>{
+
+    try{
+        const RoomType = await RoomType.find()
+        res.status(201).json(RoomType)
+    }
+    catch (error){
+        res.status(400).json({error:error.message});
+    }
+}
+

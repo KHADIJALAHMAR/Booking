@@ -19,6 +19,9 @@ const createUser = (req, res) => {
   if (infos.password !== infos.repeated_password) {
     returnErrorAsResponse(res, "passwords are not Identical");
   }
+  if (infos.role === "admin") {
+    returnErrorAsResponse(res, "You cann't create admin !");
+  }
 
   (async () => {
     try {

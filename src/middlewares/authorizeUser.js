@@ -6,7 +6,7 @@ const authorizeToken = async (req,res,next) => {
         res.status(401).json({ error: "no token found"}) 
     }else {
         try {
-            const user = await jwt.verify(token, process.env.JWT_ACCESS_SECRET)
+            const user =  await jwt.verify(token, process.env.JWT_ACCESS_SECRET)
     
             req.tokenData = await {id: user.user_id , role: user.role};
             

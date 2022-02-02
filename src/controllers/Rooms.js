@@ -1,6 +1,5 @@
-const res = require('express/lib/response');
 const {RoomType} = require('../models');
-const { find } = require('../models/Booking');
+
 
 
 const createRoomType = async (req ,res) => {
@@ -30,11 +29,20 @@ const createRoomType = async (req ,res) => {
 const getRoomType = async (req ,res ) =>{
 
     try{
-        const RoomType = await RoomType.find()
-        res.status(201).json(RoomType)
+        const roomType = await RoomType.find()
+        res.status(201).json(roomType)
     }
     catch (error){
         res.status(400).json({error:error.message});
     }
 }
 
+const deleteRoom = async (req, res) => { 
+    try {
+        await RoomType.deleteOne(req.body.id);
+  
+        res.json('DELETE Room Type');
+      } catch (error) {
+        res.status(400).json({error:error.message});
+      }
+  };

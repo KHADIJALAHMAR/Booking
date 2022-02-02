@@ -43,20 +43,15 @@ const createUser = (req, res) => {
 };
 
 // update owner infos
-const updateUser = (req, res) => {
-  const userId = req.body.userId;
-  const infos = {
-    username: req.body.username,
-    email: req.body.email,
-    password: req.body.password,
-  };
-
-  User.findOne({ _id: userId }, function (err, user) {
-    if (err) console.log(err);
-    if (user) {
-      console.log(user);
-    }
-  });
+const updateUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.body.userId);
+    Object.assign(user, req.body);
+    user.save();
+    res.json(user);
+  } catch (err) {
+    res.json(err);
+  }
 };
 
 // delete owner

@@ -1,4 +1,4 @@
-const { Room } = require('./index');
+const  Room    = require('./Room');
 const mongoose = require('mongoose');
 
 const HotelSchema = new mongoose.Schema({

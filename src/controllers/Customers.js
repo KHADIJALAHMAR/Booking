@@ -3,15 +3,13 @@ const express = require("express");
 
 
 
-const getCustomers = (req, res) =>{
-    {
-        User.find({
-        where:{
-            role:"customer",
-        }
-        }).then(() => {
-        res.json()
-        })
+const getCustomers = async (req, res) =>{
+    try{
+        await User.find({"role.name" : "customer"}).exec().then(customers => {
+            res.status(200).json(customers);
+        });
+    } catch(err) {
+        res.status(400).json({error: err.message});
     }
 }
 
@@ -26,7 +24,7 @@ const createBooking  = (req ,res) => {
         total_price: req.body.total_price ,
         status: req.body.status,
         paid:  req.body.paid,
-        // id_user :req.body.id_user,
+        id_user :req.body.id_user,
     };
     try {
         (async ()=> { 
@@ -36,16 +34,17 @@ const createBooking  = (req ,res) => {
                 total_price: booking.total_price ,
                 status: booking.status,
                 paid:  booking.paid,
-                // id_user :booking.id_user,
+                id_user :booking.id_user,
             }).save();
             res.status(201).json({
                 message: `created Booking`,
             });
         })();
     }
-        catch (error) {
+    catch (error) 
+    {
             res.status(400).json(err);
-        }
+    }
 
 };
 

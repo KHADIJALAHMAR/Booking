@@ -1,39 +1,73 @@
 const { Hotel, User } = require("../models");
+const {
+  returnErrorAsResponse,
+  returnRegisterError,
+  returnMessageAsResponse,
+} = require("../functions/index");
 
 // create an owner
-const createUser = (req, res) => {};
+const createUser = (req, res) => {
+  const infos = {
+    username: req.body.username,
+    email: req.body.email,
+    password: req.body.password,
+    repeated_password: req.body.repeated_password,
+    gender: req.body.gender,
+    role: req.body.role,
+  };
+
+  if (infos.password !== infos.repeated_password) {
+    returnErrorAsResponse(res, "passwords are not Identical");
+  }
+
+  (async () => {
+    try {
+      await User.create({
+        username: infos.username,
+        email: infos.email,
+        password: infos.password,
+        gender: infos.gender,
+        role:
+          infos.role === "owner"
+            ? { name: infos.role, status: false }
+            : { name: infos.role },
+      });
+      returnMessageAsResponse(res, "User created successfully");
+    } catch (error) {
+      returnRegisterError(res, error.message);
+    }
+  })();
+};
 
 // update owner infos
 const updateUser = (req, res) => {
-  const ownerId = req.params.ownerId;
-  const userInfos = {
-    username: req.body.username,
-    email: req.body.email,
-    role: {
-      name: req.body.role.name,
-    },
-  };
+  const userId = req.params.userId;
+  let userInfos = [];
+
   try {
-    if (userInfos.role.name == "admin") {
-      res.json({
-        message: "you canno't set the role admin!",
-      });
-    } else if (userInfos.role.name == "owner") {
-      userInfos.role.status = "false";
-      User.findByIdAndUpdate(ownerId, userInfos, function (err, ownerUpdated) {
+    if (req.body.username) {
+      userInfos.push({ username: req.body.username });
+    }
+    if (req.body.email) {
+      userInfos.push({ email: req.body.email });
+    }
+
+    if (userInfos.username !== "" && userInfos.email !== "") {
+      User.updateOne(
+        {
+          _id: userId,
+        },
+        {
+          username: userInfos.username,
+          email: userInfos.email,
+        }
+      ).then((err, userUpdated) => {
         if (err) console.log(err);
-        res.json({
-          message: "owner is updated successfully !!",
-          owner: ownerUpdated,
-        });
-      });
-    } else {
-      User.findByIdAndUpdate(ownerId, userInfos, function (err, ownerUpdated) {
-        if (err) console.log(err);
-        res.json({
-          message: "owner is updated successfully !!",
-          owner: ownerUpdated,
-        });
+        // res.status(200).json({
+        //   message: "user updated successfully !!",
+        //   user: userUpdated,
+        // });
+        console.log(userUpdated);
       });
     }
   } catch (error) {

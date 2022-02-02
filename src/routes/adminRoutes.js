@@ -10,6 +10,18 @@ const Admins = require('../controllers/Admins');
 //  Routes
 
 router
+.route('/owner/create')
+.post( authorizeWithRole('admin'), Admins.createUser );
+
+router
+.route('/owner/update/:ownerId')
+.put( authorizeWithRole('admin'), Admins.updateUser)
+
+router
+.route('/owner/delete')
+.delete( authorizeWithRole('admin'), Admins.deleteUser )
+
+router
 .route('/owner/accept')
 .put( authorizeWithRole('admin'), Admins.acceptOwner )
 

@@ -5,11 +5,11 @@ const router = express.Router();
 const Rooms = require('../controllers/Rooms');
 
 // routes
-router.route("/rooms")
-    .get(Rooms.getRooms)
+// router.route("/rooms")
+//     .get(Rooms.getRooms)
 
-router.route("/rooms/filterByPrice")
-    .post(Rooms.getRoomsByPrice);
+// router.route("/rooms/filterByPrice")
+//     .post(Rooms.getRoomsByPrice);
 
 router.route("/roomtype")
     .get(Rooms.getRoomType)

@@ -3,13 +3,13 @@ const {RoomType} = require('../models');
 
 
 const createRoomType = async (req ,res) => {
-    const roomType = {
-        name = req.body.name 
+    let roomType = {
+        name :  req.body.name, 
     };
     try{
     (async()=> {
         await new  RoomType ({
-            name = roomType.name,
+            name : roomType.name,
         }).save();
 
         res.status(201).json({

@@ -1,5 +1,5 @@
-
-const mongoose =require('mongoose');
+const { Room } = require('./index');
+const mongoose = require('mongoose');
 
 const HotelSchema = new mongoose.Schema({
     name : {
@@ -28,9 +28,14 @@ const HotelSchema = new mongoose.Schema({
         ref : "User"
     }
 });
+
+HotelSchema.pre('remove', function(next) {
+    Room.remove({hotel_id: this._id}).exec();
+    next();
+});
+
+
 const Hotel = mongoose.model('Hotel',HotelSchema);
-
-
 
 module.exports = Hotel ;
 

@@ -54,7 +54,7 @@ const updateRoomType = async (req ,res) =>{
         user.save();
         res.json(roomType);
       } catch (err) {
-        res.json(err);
+        res.status(400).json({err:err.message});
       }
 }
 

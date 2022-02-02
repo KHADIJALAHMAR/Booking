@@ -4,7 +4,7 @@ const {RoomType} = require('../models');
 
 const createRoomType = async (req ,res) => {
     const roomType = {
-        name =req.body.name ,
+        name = req.body.name 
     };
     try{
     (async()=> {
@@ -37,7 +37,7 @@ const getRoomType = async (req ,res ) =>{
     }
 }
 
-const deleteRoom = async (req, res) => { 
+const deleteRoomType = async (req, res) => { 
     try {
         await RoomType.deleteOne(req.body.id);
   
@@ -45,4 +45,23 @@ const deleteRoom = async (req, res) => {
       } catch (error) {
         res.status(400).json({error:error.message});
       }
-  };
+};
+
+const updateRoomType = async (req ,res) =>{
+    try {
+        const roomType = await RoomType.findById(req.body.roomTypeId);
+        Object.assign(roomType, req.body);
+        user.save();
+        res.json(roomType);
+      } catch (err) {
+        res.json(err);
+      }
+}
+
+module.exports ={
+    createRoomType,
+    getRoomType ,
+    deleteRoomType,
+    updateRoomType 
+
+}

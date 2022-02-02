@@ -44,38 +44,19 @@ const createUser = (req, res) => {
 
 // update owner infos
 const updateUser = (req, res) => {
-  const userId = req.params.userId;
-  let userInfos = [];
+  const userId = req.body.userId;
+  const infos = {
+    username: req.body.username,
+    email: req.body.email,
+    password: req.body.password,
+  };
 
-  try {
-    if (req.body.username) {
-      userInfos.push({ username: req.body.username });
+  User.findOne({ _id: userId }, function (err, user) {
+    if (err) console.log(err);
+    if (user) {
+      console.log(user);
     }
-    if (req.body.email) {
-      userInfos.push({ email: req.body.email });
-    }
-
-    if (userInfos.username !== "" && userInfos.email !== "") {
-      User.updateOne(
-        {
-          _id: userId,
-        },
-        {
-          username: userInfos.username,
-          email: userInfos.email,
-        }
-      ).then((err, userUpdated) => {
-        if (err) console.log(err);
-        // res.status(200).json({
-        //   message: "user updated successfully !!",
-        //   user: userUpdated,
-        // });
-        console.log(userUpdated);
-      });
-    }
-  } catch (error) {
-    res.json({ error: error.message });
-  }
+  });
 };
 
 // delete owner

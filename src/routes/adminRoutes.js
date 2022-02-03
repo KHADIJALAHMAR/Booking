@@ -5,7 +5,7 @@ const router = express.Router();
 const {authorizeWithRole} = require('../middlewares/authorizeUser')
 
 // requiring controllers
-const Admins = require('../controllers/Admins');
+const {Admins} = require('../controllers');
 
 //  Routes
 

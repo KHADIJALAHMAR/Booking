@@ -1,13 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const Hotels =require('../controllers/Hotels');
-const Owners =require ('../controllers/Owners');
-const Admins =require('../controllers/Admins');
 
-
-
-
-
+// requiring controllers
+const {Hotels, Owners , Admins} =require('../controllers');
 
 router.route("/") 
 .get(Hotels.getHotelsl)

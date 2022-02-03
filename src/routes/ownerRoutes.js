@@ -1,12 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const path = require('path');
-const multer = require('multer');
-const upload = multer({ dest : path.join(__dirname, 'src' , 'public' , 'assets' , 'uploads' , 'images' , 'room_images')})
 const {authorizeWithRole} = require('../middlewares/authorizeUser');
 
 // controller
-const Owners = require("../controllers/Owners");
+const {Owners , roomUpload} = require("../controllers");
 
 // routes
 router.route("/accepted")
@@ -19,7 +16,7 @@ router.route("/banned")
     .get(authorizeWithRole("admin"), Owners.getBannedOwners);
 
 router.route("/room")
-    .post(authorizeWithRole("owner"), Owners.createRoom);
+    .post(authorizeWithRole("owner"), roomUpload.array('room-image', 8), Owners.createRoom);
 
 router.route("/room/:roomId")
     .put(authorizeWithRole("owner"), Owners.updateRoom)

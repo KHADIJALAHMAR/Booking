@@ -30,4 +30,8 @@ router.route("/booking/accept")
 router.route("/booking/refuse")
     .put(authorizeWithRole("owner"), Owners.refuseBooking);
 
+// route owner
+router.route("/")
+    .put(Owners.updateOwner);
+
 module.exports = router;

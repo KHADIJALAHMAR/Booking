@@ -8,7 +8,7 @@ require("./src/config/mongoose");
 
 // requiring middlewares
 const cookieParser = require("cookie-parser");
-const {authorizeToken} = require("./src/middlewares/authorizeUser");
+const { authorizeToken } = require("./src/middlewares/authorizeUser");
 
 // requiring Routes
 const adminRoutes = require("./src/routes/adminRoutes");
@@ -25,7 +25,6 @@ const roomRoutes = require("./src/routes/roomRoutes");
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 
 app.get("/", (req, res) => {
   res.json({

@@ -7,6 +7,10 @@ const HotelSchema = new mongoose.Schema({
         required: true,
         maxlength: 20
     },
+    descreption: {
+        type: String,
+        required: true
+    },
     images:[{
         data: Buffer,
         contentType: String,

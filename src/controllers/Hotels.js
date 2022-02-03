@@ -3,7 +3,7 @@ const {Hotel, Location} = require('../models')
 
 
 
-// Get All The  Hotels
+// Get All The  Hotels acess by admin 
 const getHotels = async (req, res) =>{
 
     const hotels = await  Hotel.find()
@@ -15,6 +15,18 @@ const getHotels = async (req, res) =>{
   } 
 };
 
+// Get the Owner Hotel by id
+const getHotelsbyowner = async (req, res) =>{
+
+  const hotels = await  Hotel.find({user_id:req.params.id})
+  
+  try{
+    res.json(hotels);
+} catch (error){
+  res.status(400).json({error:error.message});
+} 
+};
+
 
 // Create An Hotel
 const createHotel = async (req, res) => {
@@ -22,12 +34,12 @@ const createHotel = async (req, res) => {
     const createhotel = await Hotel.create({
 
       name:req.body.name,
-      description:req.body.description,
-      mage_cover:req.body.mage_cover, 
+      descreption:req.body.descreption,
+      image_cover:req.body.mage_cover, 
       images:req.body.images,
       stars:req.body.stars,
       status:req.body.status,
-      user_id:req.body.user_id,
+      userId:req.tokenData.id,
 
     })
   try{
@@ -42,11 +54,14 @@ const createHotel = async (req, res) => {
 
 const updateHotel = async (req, res) => {
   
-  const updatehotel = await Hotel.findByIdAndUpdate({ _id: req.params.id},{name : req.body.name,slug: slugify(req.body.name),},{returnDocument: 'after'});
+
  try {
-   res.json(updatehotel);
+  const updatehotel = await Hotel.findById( req.body.HotelId);
+  Object.assign(updatehotel ,req.body)
+  updatehotel.save();
+   res.status(201).json(updatehotel);
  } catch (error) {
-   res.status(500).json(error);
+   res.status(500).json({error :error.message});
  }
 }
 
@@ -127,5 +142,6 @@ module.exports = {
   searchFilters,
   deleteHotel,
   createHotel,
-  updateHotel
+  updateHotel,
+  getHotelsbyowner
 }

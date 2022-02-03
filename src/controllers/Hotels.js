@@ -69,11 +69,12 @@ const updateHotel = async (req, res) => {
 // Delete An Hotel
 const deleteHotel = async (req, res) => { 
  
-      await Hotel.findOneAndDelete({ id:req.params.id})
-
-      try {
-      res.status(200).json({message:"The Hotel was Deleted  with Success"})
-    } catch (error) {
+    
+      try{
+        const deletehotel =  await Hotel.findByIdAndDelete(req.body.HotelId)
+        if (!deletehotel) res.status(404).json({ message: "No Hotel Found" });
+      res.json({ message: "Hotel was deleted with success !!" });
+      } catch (error) {
       res.status(400).json({error:error.message});
     }
 };

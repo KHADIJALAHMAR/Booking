@@ -36,7 +36,7 @@ router.route("/update")
 // router.route("/filterByStars")
 // .post(Hotels.getHotelsByStars);
 
-router.route("/delete/hotelId") 	
+router.route("/delete") 	
 .delete(Hotels.deleteHotel);
 
 module.exports = router;

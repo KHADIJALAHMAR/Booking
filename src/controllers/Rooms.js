@@ -51,7 +51,7 @@ const updateRoomType = async (req ,res) =>{
     try {
         const roomType = await RoomType.findById(req.body.roomTypeId);
         Object.assign(roomType, req.body);
-        user.save();
+        roomType.save();
         res.json(roomType);
       } catch (err) {
         res.status(400).json({err:err.message});

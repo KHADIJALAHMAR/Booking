@@ -1,7 +1,7 @@
 const express = require("express");
 
 // user model
-const { User, Room } = require("../models");
+const { User, Room, Booking, BookingRoom } = require("../models");
 // To optimize
 const getAcceptedOwners = (req, res) => {
   User.find((err, users) => {
@@ -39,7 +39,6 @@ const getRefusedOwners = (req, res) => {
     }
     if (users) {
       let owner = {};
-      let ownerAccepted = "";
       users.forEach((user) => {
         if (user.role.status == false) {
           owner = {
@@ -112,6 +111,7 @@ const deleteRoom = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
 
 const updateOwner = async (req, res )=>{
   try{
@@ -125,8 +125,29 @@ const updateOwner = async (req, res )=>{
 }
 
 const acceptBooking = (req, res) => {};
+=======
+const acceptBooking = (req, res) => {
+  // I must do function for changing status of booking from true to false
+  let bookingId = req.body.bookingId;
+  const roomId = req.body.roomId;
+  try {
+    // get rooms have the same booking_id
+    BookingRoom.findOne(
+      { booking_id: bookingId, room_id: roomId },
+      function (err, room) {
+        if (err) console.log(err);
+        res.json({ room });
+      }
+    );
+  } catch (error) {
+    res.json(error.message);
+  }
+};
+>>>>>>> main
 
-const refuseBooking = (req, res) => {};
+const refuseBooking = (req, res) => {
+  
+};
 
 module.exports = {
   getAcceptedOwners,

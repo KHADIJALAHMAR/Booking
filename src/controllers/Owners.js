@@ -1,4 +1,4 @@
-const express = require("express");
+const { returnErrorAsResponse } = require("../functions");
 
 // user model
 const { User, Room, Booking, BookingRoom } = require("../models");
@@ -66,13 +66,20 @@ const createRoom = (req, res) => {
     price: req.body.price,
     hotel_id: req.body.hotel_id,
     room_type_id: req.body.room_type_id,
+    images : []
   };
+
+  req.files.map((file,index) => {
+    room.images.push(file.originalname);
+  })
+
   try {
     (async () => {
       await new Room({
         number: room.number,
         room_quantity: room.room_quantity,
         description: room.description,
+        images: room.images,
         price: room.price,
         hotel_id: room.hotel_id,
         room_type_id: room.room_type_id,

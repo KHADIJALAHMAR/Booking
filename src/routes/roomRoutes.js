@@ -18,6 +18,7 @@ router.route("/roomtype")
     .delete(Rooms.deleteRoomType)
 router.route("/").get(Rooms.getRooms);
 
-router.route("/filterByPrice").post(Rooms.getRoomsByPrice);
+router.route("/filterByPrice")
+    .post(Rooms.getRoomsByPrice);
 
 module.exports = router;

@@ -120,14 +120,15 @@ const getHotelsByStars = (req, res) =>{
     res.status(400).send();
   }
 }
-const getRoomsByprice = (req ,res )=>{
-   const room =Room.find({} ,{price :req.body.price}).populate('hotel_id',"name").exec()
+const getRoomsByPrice = (req ,res )=>{
+  const room =Room.find({} ,{price :req.body.price}).populate('hotel_id',"name").exec()
   .then(() => {
     res.json(room)
   }).catch((error)=>{
     res.json(error);
   })
 };
+
 
 
 // This Method used To not export all The Methods, so in this case, 
@@ -152,5 +153,5 @@ module.exports = {
   createHotel,
   updateHotel,
   getHotelsbyowner,
-  getRoomsByprice,
+  getRoomsByPrice,
 }

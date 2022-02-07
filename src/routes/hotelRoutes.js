@@ -9,23 +9,20 @@ const { authorizeWithRole } = require('../middlewares/authorizeUser');
 
 
 
-router.route("/:id") 
-.get(authorizeWithRole('owner'),Hotels.getHotelsbyowner)
+// router.route("/:id") 
+// .get(authorizeWithRole('owner'),Hotels.getHotelsbyowner)
 
 router.route("/") 
 .get(authorizeWithRole('admin', 'owner'),Hotels.getHotels)
-.post(authorizeWithRole('admin', 'owner') ,Hotels.createHotel);
+.post(authorizeWithRole('admin', 'owner') ,Hotels.createHotel)
+.put( authorizeWithRole('admin', 'owner') ,Hotels.updateHotel)
+.delete( authorizeWithRole('admin', 'owner') ,Hotels.deleteHotel);
 
 router.route("/accepted") 
 .get(Admins.getAcceptedHotels);
 
 router.route("/refused")
 .get(Admins.getRefusedHotels);
-             
-
-router.route("/update") 
-.put( Hotels.updateHotel)
-// .delete( Owners.updateHotel);
 
 // router.route("/filterByName")
 // .post(Hotels.getHotelsByName);
@@ -35,8 +32,5 @@ router.route("/update")
 
 // router.route("/filterByStars")
 // .post(Hotels.getHotelsByStars);
-
-router.route("/delete") 	
-.delete(Hotels.deleteHotel);
 
 module.exports = router;

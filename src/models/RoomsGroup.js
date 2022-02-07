@@ -2,9 +2,6 @@ const mongoose = require("mongoose");
 
 // create Shema
 const RoomSchema = new mongoose.Schema({
-  number: {
-    type: Number,
-  },
   room_quantity: {
     type: Number,
   },
@@ -27,6 +24,6 @@ const RoomSchema = new mongoose.Schema({
   },
 });
 
-const Room = mongoose.model("Room", RoomSchema);
+const RoomsGroup = mongoose.model("RoomsGroup", RoomSchema);
 
-module.exports = Room;
+module.exports = RoomsGroup;

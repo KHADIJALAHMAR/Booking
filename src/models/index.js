@@ -3,7 +3,7 @@ const BookingRoom = require('./BookingRoom')
 const Hotel = require('./Hotel')
 const Location = require('./Location')
 const Review = require('./Review')
-const Room = require('./Room')
+const RoomsGroup = require('./RoomsGroup')
 const RoomType = require('./RoomType')
 const User = require('./User')
 
@@ -13,7 +13,7 @@ module.exports = {
     Hotel,
     Location,
     Review,
-    Room,
+    RoomsGroup,
     RoomType,
     User
 }

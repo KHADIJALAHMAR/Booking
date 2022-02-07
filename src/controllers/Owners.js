@@ -1,7 +1,7 @@
 const { returnErrorAsResponse } = require("../functions");
 
 // user model
-const { User, Room, Booking, BookingRoom } = require("../models");
+const { User, RoomsGroup, Booking, BookingRoom } = require("../models");
 // To optimize
 const getAcceptedOwners = (req, res) => {
   User.find((err, users) => {
@@ -60,7 +60,6 @@ const getBannedOwners = (req, res) => {};
 
 const createRoom = (req, res) => {
   let room = {
-    number: req.body.number,
     room_quantity: req.body.room_quantity,
     description: req.body.description,
     price: req.body.price,
@@ -75,8 +74,7 @@ const createRoom = (req, res) => {
 
   try {
     (async () => {
-      await new Room({
-        number: room.number,
+      await new RoomsGroup({
         room_quantity: room.room_quantity,
         description: room.description,
         images: room.images,
@@ -85,7 +83,7 @@ const createRoom = (req, res) => {
         room_type_id: room.room_type_id,
       }).save();
       res.json({
-        message: `new room created`,
+        message: `new room group created`,
       });
     })();
   } catch (error) {
@@ -96,11 +94,11 @@ const createRoom = (req, res) => {
 const updateRoom = async (req, res) => {
   const roomId = req.params.roomId;
   try {
-    await Room.findByIdAndUpdate(roomId, req.body);
-    const room = await Room.findOne({ _id: roomId });
+    await RoomsGroup.findByIdAndUpdate(roomId, req.body);
+    const roomsgroup = await RoomsGroup.findOne({ _id: roomId });
     res.json({
-      message: "room updated !!",
-      room,
+      message: "rooms group updated !!",
+      roomsgroup,
     });
   } catch (error) {
     res.status(500).json(error);
@@ -109,8 +107,12 @@ const updateRoom = async (req, res) => {
 
 const deleteRoom = async (req, res) => {
   const roomId = req.params.roomId;
+  
   try {
-    const room = await Room.findByIdAndDelete(roomId);
+    const roomQte = await RoomsGroup.findById(roomId).select('room_quantity');
+      console.log(roomQte, typeof roomQte);
+    
+    const room = await RoomsGroup.findByIdAndUpdate(roomId, {room_quantity: roomQte.room_quantity - 1});
     if (!room) res.status(404).json({ message: "no room found" });
     res.json({ message: "room deleted successfully !!" });
   } catch (error) {

@@ -111,7 +111,6 @@ const deleteRoom = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
 
 const updateOwner = async (req, res )=>{
   try{
@@ -124,8 +123,6 @@ const updateOwner = async (req, res )=>{
   }
 }
 
-const acceptBooking = (req, res) => {};
-=======
 const acceptBooking = (req, res) => {
   // I must do function for changing status of booking from true to false
   let bookingId = req.body.bookingId;
@@ -143,7 +140,6 @@ const acceptBooking = (req, res) => {
     res.json(error.message);
   }
 };
->>>>>>> main
 
 const refuseBooking = (req, res) => {
   

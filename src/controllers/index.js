@@ -10,6 +10,18 @@ const Users = require('./Users');
 const path = require('path');
 const multer = require('multer');
 
+// storage function
+function manageStorage(pathName){
+    return multer.diskStorage({   
+        destination: function(req, file, cb) { 
+           cb(null, pathName );    
+        }, 
+        filename: function(req, file, cb) { 
+           cb(null , `image_${Date.now()}.${path.extname(file.originalname).toLowerCase()}`);   
+        }
+     })
+}
+
 // filter function
 const fFilter = (req, file, cb) =>{    
     // Allowed ext
@@ -19,7 +31,7 @@ const fFilter = (req, file, cb) =>{
     const extname =  filetypes.test(path.extname(file.originalname).toLowerCase());
    // Check mime
    const mimetype = filetypes.test(file.mimetype);
-  
+
    if(mimetype && extname){
        return cb(null,true);
    } else {
@@ -27,9 +39,9 @@ const fFilter = (req, file, cb) =>{
    }
 }
 
-const roomUpload = multer({  fileFilter: fFilter , dest : path.join(path.dirname(__dirname) , 'public' , 'assets' , 'uploads' , 'images' , 'room_images')})
+const roomUpload = multer({  fileFilter: fFilter , storage: manageStorage(path.join(path.dirname(__dirname) , 'public' , 'assets' , 'uploads' , 'images' , 'room_images')) })
 
-const hotelUpload = multer({ fileFilter: fFilter , dest : path.join(path.dirname(__dirname) , 'public' , 'assets' , 'uploads' , 'images' , 'hotel_images')})
+const hotelUpload = multer({ fileFilter: fFilter , storage: manageStorage(path.join(path.dirname(__dirname) , 'public' , 'assets' , 'uploads' , 'images' , 'hotel_images')) })
 
 module.exports = {
     Admins,

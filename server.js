@@ -18,7 +18,6 @@ const authentificationRoutes = require("./src/routes/authentificationRoutes");
 // const hotelRoutes = require("./src/routes/hotelRoutes");
 const ownerRoutes = require("./src/routes/ownerRoutes");
 // const reviewRoutes = require("./src/routes/reviewRoutes");
-
 const roomRoutes = require("./src/routes/roomRoutes");
 
 // using middlewares

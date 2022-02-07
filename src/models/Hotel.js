@@ -1,5 +1,5 @@
-
-const mongoose =require('mongoose');
+const  RoomsGroup    = require('./RoomsGroup');
+const mongoose = require('mongoose');
 
 const HotelSchema = new mongoose.Schema({
     name : {
@@ -7,30 +7,39 @@ const HotelSchema = new mongoose.Schema({
         required: true,
         maxlength: 20
     },
-    images:[{
-        data: Buffer,
-        contentType: String,
-    }],
-    image_cover:{
-        data: Buffer,
-        contentType: String,
+    descreption: {
+        type: String,
+        required: true
     },
-    stars :{
-        type: Number,
-        default: 0
-    },
-    status :{
-        type: Boolean, 
-        default: false
-    },
+    // images:[{
+    //     data: Buffer,
+    //     contentType: String,
+    // }],
+    // image_cover:{
+    //     data: Buffer,
+    //     contentType: String,
+    // },
+    // stars :{
+    //     type: Number,
+    //     default: 0
+    // },
+    // status :{
+    //     type: Boolean, 
+    //     default: false
+    // },
     userId :{
         type :mongoose.Schema.Types.ObjectId,
         ref : "User"
     }
 });
+
+HotelSchema.pre('remove', function(next) {
+    RoomsGroup.remove({hotel_id: this._id}).exec();
+    next();
+});
+
+
 const Hotel = mongoose.model('Hotel',HotelSchema);
-
-
 
 module.exports = Hotel ;
 

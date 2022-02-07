@@ -14,26 +14,24 @@ const RoomSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  images : [{
+    type: String
+  }],
   price: {
     type: Number,
     required: true,
   },
-  hotel_id: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Hotel",
-      required: true,
-    },
-  ],
-  room_type_id: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "RoomType",
-      required: true,
-    },
-  ],
+
+  hotel_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Hotel",
+  },
+  room_type_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "RoomType",
+  },
 });
 
-const Room = mongoose.model("Room", RoomSchema);
+const RoomsGroup = mongoose.model("RoomsGroup", RoomSchema);
 
-module.exports = Room;
+module.exports = RoomsGroup;

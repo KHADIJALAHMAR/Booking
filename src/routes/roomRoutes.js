@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 // room controller
-const Rooms = require("../controllers/Rooms");
+const { Rooms } = require("../controllers");
 
 // routes
 // router.route("/rooms")

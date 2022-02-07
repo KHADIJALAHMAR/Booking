@@ -1,5 +1,5 @@
 
-const {Hotel, Location , Room} = require('../models')
+const {Hotel, Location , RoomsGroup} = require('../models')
 
 
 
@@ -121,7 +121,7 @@ const getHotelsByStars = (req, res) =>{
   }
 }
 const getRoomsByPrice = (req ,res )=>{
-  const room =Room.find({} ,{price :req.body.price}).populate('hotel_id',"name").exec()
+  const room =RoomsGroup.find({} ,{price :req.body.price}).populate('hotel_id',"name").exec()
   .then(() => {
     res.json(room)
   }).catch((error)=>{

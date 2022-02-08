@@ -8,7 +8,6 @@ const { authorizeWithRole } = require("../middlewares/authorizeUser");
 const { Owners, roomUpload } = require("../controllers");
 
 // routes
-
 router
   .route("/accepted")
   .get(authorizeWithRole("admin"), Owners.getAcceptedOwners);

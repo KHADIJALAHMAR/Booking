@@ -21,6 +21,7 @@ const RoomSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+
   hotel_id: [
     {
       type: mongoose.Schema.Types.ObjectId,

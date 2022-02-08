@@ -2,11 +2,11 @@ const {Booking} = require('../models')
 
 // Get all Booking
 const getBookings = async (req, res ) =>{
+  
+  const bookings = await  Booking.find()
+
   try{
-
-    const bookings = await  Booking.find()
     res.json(bookings);
-
   } catch (error){
     res.status(400).json({error:error.message});
   }
@@ -15,10 +15,11 @@ const getBookings = async (req, res ) =>{
 
 // Delete Booking
 const deleteBooking = async (req, res) => { 
-  try {
-      await Booking.deleteOne(req.body.id);
 
-      res.json('DELETE Booking');
+  await Booking.findOneAndDelete({id :req.params.id});  
+
+  try {
+      res.status(200).json({message:"The Booking was Deleted With Success"});
     } catch (error) {
       res.status(400).json({error:error.message});
     }

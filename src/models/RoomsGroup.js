@@ -14,6 +14,9 @@ const RoomSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  images : [{
+    type: String
+  }],
   price: {
     type: Number,
     required: true,
@@ -34,6 +37,6 @@ const RoomSchema = new mongoose.Schema({
   ],
 });
 
-const Room = mongoose.model("Room", RoomSchema);
+const RoomsGroup = mongoose.model("RoomsGroup", RoomSchema);
 
-module.exports = Room;
+module.exports = RoomsGroup;

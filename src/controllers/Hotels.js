@@ -122,6 +122,15 @@ const getHotelsByStars = (req, res) =>{
 }
 
 
+// Fillter Hotels By Date
+const getHotelsByDate = (req, res) => {
+  const dateFrom = req.body.dateFrom;
+  const dateTo = req.body.dateTo;
+
+  console.log(dateFrom, dateTo)
+}
+
+
 
 // This Method used To not export all The Methods, so in this case, 
 // we will use one method in route to filter by name city and stars
@@ -144,5 +153,5 @@ module.exports = {
   deleteHotel,
   createHotel,
   updateHotel,
-  getHotelsbyowner
+  getHotelsbyowner,
 }

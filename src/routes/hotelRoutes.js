@@ -19,7 +19,7 @@ router.route("/accepted")
 
 router.route("/refused")
 .get(Admins.getRefusedHotels);
-             
+
 
 router.route("/update") 
 .put( Hotels.updateHotel)

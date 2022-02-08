@@ -1,28 +1,26 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
 // requiring controllers
-const {Hotels, Owners , Admins} =require('../controllers');
-const { authorizeWithRole } = require('../middlewares/authorizeUser');
+const { Hotels, Owners, Admins } = require("../controllers");
+const { authorizeWithRole } = require("../middlewares/authorizeUser");
 
+router.route("/:id")
+    .get(authorizeWithRole("owner"), Hotels.getHotelsbyowner);
 
+router
+  .route("/")
+  .get(authorizeWithRole("admin", "owner"), Hotels.getHotels)
+  .post(authorizeWithRole("admin", "owner"), Hotels.createHotel);
 
-router.route("/:id") 
-.get(authorizeWithRole('owner'),Hotels.getHotelsbyowner)
-
-router.route("/") 
-.get(authorizeWithRole('admin', 'owner'),Hotels.getHotels)
-.post(authorizeWithRole('admin', 'owner') ,Hotels.createHotel);
-
-router.route("/accepted") 
-.get(Admins.getAcceptedHotels);
+router.route("/accepted")
+    .get(Admins.getAcceptedHotels);
 
 router.route("/refused")
-.get(Admins.getRefusedHotels);
+    .get(Admins.getRefusedHotels);
 
-
-router.route("/update") 
-.put( Hotels.updateHotel)
+router.route("/update")
+    .put(Hotels.updateHotel);
 // .delete( Owners.updateHotel);
 
 // router.route("/filterByName")
@@ -34,7 +32,10 @@ router.route("/update")
 // router.route("/filterByStars")
 // .post(Hotels.getHotelsByStars);
 
-router.route("/delete") 	
-.delete(Hotels.deleteHotel);
+router.route("/hotelsByDate")
+    .post(Hotels.getHotelsByDate);
+
+router.route("/delete")
+    .delete(Hotels.deleteHotel);
 
 module.exports = router;

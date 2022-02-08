@@ -1,5 +1,5 @@
 
-const {Hotel, Location} = require('../models')
+const {Hotel, Location , RoomsGroup} = require('../models')
 
 
 
@@ -120,6 +120,14 @@ const getHotelsByStars = (req, res) =>{
     res.status(400).send();
   }
 }
+const getRoomsByPrice = (req ,res )=>{
+  const room =RoomsGroup.find({} ,{price :req.body.price}).populate('hotel_id',"name").exec()
+  .then(() => {
+    res.json(room)
+  }).catch((error)=>{
+    res.json(error);
+  })
+};
 
 
 // Fillter Hotels By Date
@@ -154,4 +162,5 @@ module.exports = {
   createHotel,
   updateHotel,
   getHotelsbyowner,
+  getRoomsByPrice,
 }

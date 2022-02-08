@@ -22,14 +22,20 @@ const RoomSchema = new mongoose.Schema({
     required: true,
   },
 
-  hotel_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Hotel",
-  },
-  room_type_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "RoomType",
-  },
+  hotel_id: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Hotel",
+      required: true,
+    },
+  ],
+  room_type_id: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "RoomType",
+      required: true,
+    },
+  ],
 });
 
 const RoomsGroup = mongoose.model("RoomsGroup", RoomSchema);

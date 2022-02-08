@@ -18,7 +18,13 @@ router
 
 router.route("/banned").get(authorizeWithRole("admin"), Owners.getBannedOwners);
 
-router.route("/room").post(authorizeWithRole("owner"), Owners.createRoom);
+router
+  .route("/room")
+  .post(
+    authorizeWithRole("owner"),
+    roomUpload.array("room-image", 8),
+    Owners.createRoom
+  );
 
 router
   .route("/room/:roomId")
@@ -29,7 +35,9 @@ router
   .route("/booking/accept")
   .put(authorizeWithRole("owner"), Owners.acceptBooking);
 
-router.route("/booking/refuse");
+router
+  .route("/booking/refuse")
+  .put(authorizeWithRole("owner"), Owners.refuseBooking);
 
 // route owner
 // router.route("/")

@@ -120,6 +120,18 @@ const deleteRoom = async (req, res) => {
   }
 };
 
+
+const updateOwner = async (req, res )=>{
+  try{
+    const edite = await User.findById(req.body.ownerId)
+    Object.assign(edite ,req.body)
+    edite.save();
+    res.status(201).json(edite);
+  }catch(error){
+    res.status(400).json({error :error.message});
+  }
+}
+
 const acceptBooking = (req, res) => {
   // I must do function for changing status of booking from true to false
   let bookingId = req.body.bookingId;
@@ -149,4 +161,5 @@ module.exports = {
   deleteRoom,
   acceptBooking,
   refuseBooking,
+  updateOwner,
 };

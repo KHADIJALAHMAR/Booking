@@ -150,9 +150,7 @@ const acceptBooking = (req, res) => {
   }
 };
 
-const refuseBooking = (req, res) => {
-  
-};
+const refuseBooking = (req, res) => {};
 
 module.exports = {
   getAcceptedOwners,

@@ -3,8 +3,7 @@ const router = express.Router();
 
 // Requering Customer Controller
 
-const Customers = require ('../controllers/Customers')
-const Admins    = require ('../controllers/Admins')
+const {Customers,Admins} = require ('../controllers')
 
 // routes______________________________________________//
 

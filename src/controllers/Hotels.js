@@ -1,5 +1,5 @@
 
-const {Hotel, Location} = require('../models')
+const {Hotel, Location , RoomsGroup} = require('../models')
 
 
 
@@ -145,6 +145,23 @@ const getHotelsByStars = (req, res) =>{
     res.status(400).send();
   }
 }
+const getRoomsByPrice = (req ,res )=>{
+  const room =RoomsGroup.find({} ,{price :req.body.price}).populate('hotel_id',"name").exec()
+  .then(() => {
+    res.json(room)
+  }).catch((error)=>{
+    res.json(error);
+  })
+};
+
+
+// Fillter Hotels By Date
+const getHotelsByDate = (req, res) => {
+  const dateFrom = req.body.dateFrom;
+  const dateTo = req.body.dateTo;
+
+  console.log(dateFrom, dateTo)
+}
 
 
 // This Method used To not export all The Methods, so in this case, 
@@ -169,5 +186,7 @@ module.exports = {
   createHotel,
   updateHotel,
   // getHotelsbyowner,
-  getHotelsByName
+  getHotelsByName,
+  getHotelsbyowner,
+  getRoomsByPrice,
 }

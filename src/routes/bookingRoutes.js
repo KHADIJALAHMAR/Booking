@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const ControllerBooking =require('../controllers/Bookings');
 
-
+// requiring controller
+const {Bookings} = require('../controllers');
 
 router.route("/")
-.get(ControllerBooking.getBookings)
-.delete(ControllerBooking.deleteBooking);
+.get(Bookings.getBookings)
+.delete(Bookings.deleteBooking);
 
 

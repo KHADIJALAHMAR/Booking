@@ -1,11 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const Hotels =require('../controllers/Hotels');
-const Owners =require ('../controllers/Owners');
-const Admins =require('../controllers/Admins');
+
+// requiring controllers
+const {Hotels, Owners , Admins} =require('../controllers');
 const { authorizeWithRole } = require('../middlewares/authorizeUser');
-
-
 
 
 
@@ -27,6 +25,7 @@ router.route("/accepted")
 
 router.route("/refused")
 .get(Admins.getRefusedHotels);
+
 
 
 router.route("/filterByName")

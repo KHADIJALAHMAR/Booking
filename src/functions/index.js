@@ -12,18 +12,14 @@ const returnRegisterError = (res,message) => {
     
     errors.forEach((error, index) => {
         let splitedErr = error.split(':');
-        console.log(splitedErr);
         if(index === 0) {
-            errorsObject = {
-                [splitedErr[1]] : splitedErr[2]
-            };
+            errorsObject[splitedErr[1].trim()] = splitedErr[2].trim();
         }else {
-            errorsObject = {
-                [splitedErr[0]] : splitedErr[1]
-            };
+            errorsObject[splitedErr[0].trim()] = splitedErr[1].trim();
         }     
     });
-    res.status(200).json({errorobject});
+
+    res.status(200).json({errorsObject});
 }
 
 module.exports = {

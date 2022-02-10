@@ -1,4 +1,4 @@
-const  Room    = require('./Room');
+const  RoomsGroup    = require('./RoomsGroup');
 const mongoose = require('mongoose');
 
 const HotelSchema = new mongoose.Schema({
@@ -31,11 +31,12 @@ const HotelSchema = new mongoose.Schema({
         type :mongoose.Schema.Types.ObjectId,
         required: true,
         ref : "User"
-    }
-});
+    },
+
+} ,{ timestamps: true } );
 
 HotelSchema.pre('remove', function(next) {
-    Room.remove({hotel_id: this._id}).exec();
+    RoomsGroup.remove({hotel_id: this._id}).exec();
     next();
 });
 

@@ -42,7 +42,12 @@ const SchemaTypePayment = new mongoose.Schema({
   },
   payementMethodInfos: {
     enum: [CashSchema, CheckSchema , CreditSchema],
-  }
+  },
+ Booking_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Booking",
+  },
+
 }); 
 const TypePayment = mongoose.model("TypePayment", SchemaTypePayment);
 

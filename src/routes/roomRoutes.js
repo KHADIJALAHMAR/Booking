@@ -6,11 +6,9 @@ const { Rooms } = require("../controllers");
 const {Hotels} =require("../controllers");
 
 // routes
-// router.route("/rooms")
-//     .get(Rooms.getRooms)
+router.route("/rooms").get(Rooms.getRooms);
 
-// router.route("/rooms/filterByPrice")
-//     .post(Rooms.getRoomsByPrice);
+router.route("/rooms/filterByPrice").post(Rooms.getRoomsByPrice);
 
 router.route("/roomtype")
     .get(Rooms.getRoomType)

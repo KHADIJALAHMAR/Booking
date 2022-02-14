@@ -121,8 +121,9 @@ const getHotelsByStars = (req, res) =>{
   }
 }
 const getRoomsByPrice = (req ,res )=>{
-  const room =RoomsGroup.find({} ,{price :req.body.price}).populate('hotel_id',"name").exec()
-  .then(() => {
+  RoomsGroup.find({price :req.body.price}).populate('hotel_id',"name").exec()
+  .then((room) => {
+    console.log(room);
     res.json(room)
   }).catch((error)=>{
     res.json(error);

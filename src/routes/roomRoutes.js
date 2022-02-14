@@ -3,6 +3,7 @@ const router = express.Router();
 
 // room controller
 const { Rooms } = require("../controllers");
+const {Hotels} =require("../controllers");
 
 // routes
 // router.route("/rooms")
@@ -16,9 +17,8 @@ router.route("/roomtype")
     .post(Rooms.createRoomType)
     .put(Rooms.updateRoomType)
     .delete(Rooms.deleteRoomType)
-router.route("/").get(Rooms.getRooms);
-
+// router.route("/").get(Rooms.getRooms);
 router.route("/filterByPrice")
-    .post(Rooms.getRoomsByPrice);
+    .post(Hotels.getRoomsByPrice);
 
 module.exports = router;

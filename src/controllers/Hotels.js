@@ -1,4 +1,4 @@
-const { Hotel, Location, RoomsGroup } = require("../models");
+const { Hotel, Location, RoomsGroup, Booking } = require("../models");
 
 // Get All The  Hotels acess by admin
 const getHotels = async (req, res) => {
@@ -113,10 +113,30 @@ const getRoomsByPrice = (req, res) => {
 
 // Fillter Hotels By Date
 const getHotelsByDate = (req, res) => {
-  const date = req.body.date
-  const filterDate = Hotel.find({createdAt : { $gte : date} }, function(err, docs){
-    console.log(docs);
-});
+  const dateFrom = new Date(req.body.dateFrom); //12
+  const dateTo = new Date(req.body.dateTo); //15
+
+  console.log(dateFrom, dateTo);
+
+  Booking.find(
+    {
+      $and: [
+        {
+          $or: [
+            { date_from: { $lt: dateFrom } },
+            { date_from: { $gt: dateTo } },
+          ],
+        },
+        { $or: [{ date_to: { $gt: dateTo } }, { date_to: { $lt: dateFrom } }] },
+      ],
+    },
+    function (err, data) {
+      if (err) console.log(err);
+      if (data) {
+        res.json({ data });
+      }
+    }
+  );
 };
 
 // This Method used To not export all The Methods, so in this case,

@@ -116,8 +116,6 @@ const getHotelsByDate = (req, res) => {
   const dateFrom = new Date(req.body.dateFrom); //12
   const dateTo = new Date(req.body.dateTo); //15
 
-  console.log(dateFrom, dateTo);
-
   Booking.find(
     {
       $and: [

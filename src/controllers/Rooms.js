@@ -1,10 +1,10 @@
-const { Room } = require("../models");
+// const { RoomType } = require("../models");
 
 // search for room with param
 const getRooms = (req, res) => {
   const hotelId = req.body.hotelId;
   try {
-    Room.find({ id_hotel: hotelId }, function (err, rooms) {
+    RoomType.find({ id_hotel: hotelId }, function (err, rooms) {
       if (err) res.status(404).json({ err: err.message });
       res.status(200).json({
         rooms: rooms,
@@ -18,10 +18,6 @@ const getRooms = (req, res) => {
 //
 const getRoomsByPrice = (req, res) => {};
 
-module.exports = {
-  getRooms,
-  getRoomsByPrice,
-};
 
 const { RoomType } = require("../models");
 
@@ -75,6 +71,8 @@ const updateRoomType = async (req, res) => {
 };
 
 module.exports = {
+  getRooms,
+  getRoomsByPrice,
   createRoomType,
   getRoomType,
   deleteRoomType,

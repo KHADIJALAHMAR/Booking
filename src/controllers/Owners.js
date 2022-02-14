@@ -55,7 +55,7 @@ const getRefusedOwners = (req, res) => {
     }
   });
 };
-
+// Pending Method
 const getBannedOwners = (req, res) => {};
 
 const createRoom = (req, res) => {
@@ -131,7 +131,7 @@ const updateOwner = async (req, res )=>{
     res.status(400).json({error :error.message});
   }
 }
-
+// Pending Method
 const acceptBooking = (req, res) => {
   // I must do function for changing status of booking from true to false
   let bookingId = req.body.bookingId;
@@ -149,7 +149,7 @@ const acceptBooking = (req, res) => {
     res.json(error.message);
   }
 };
-
+// Pending Method
 const refuseBooking = (req, res) => {};
 
 module.exports = {

@@ -98,17 +98,15 @@ const getHotelsByStars = (req, res) => {
   } else {
     res.status(400).send();
   }
-};
-const getRoomsByPrice = (req, res) => {
-  const room = RoomsGroup.find({}, { price: req.body.price })
-    .populate("hotel_id", "name")
-    .exec()
-    .then(() => {
-      res.json(room);
-    })
-    .catch((error) => {
-      res.json(error);
-    });
+}
+const getRoomsByPrice = (req ,res )=>{
+  RoomsGroup.find({price :req.body.price}).populate('hotel_id',"name").exec()
+  .then((room) => {
+    console.log(room);
+    res.json(room)
+  }).catch((error)=>{
+    res.json(error);
+  })
 };
 
 // Fillter Hotels By Date

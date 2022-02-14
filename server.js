@@ -42,6 +42,7 @@ app.use("/admin", adminRoutes);
 // app.use("/customers", customerRoutes);
 app.use("/hotels", hotelRoutes);
 app.use("/owners", ownerRoutes);
+
 app.use("/rooms", roomRoutes);
 // app.use("/bookings", bookingRoutes);
 

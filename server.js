@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 8000;
+const cors = require("cors");
 
 // requiring mongoose
 require("./src/config/mongoose");
@@ -24,6 +25,7 @@ const roomRoutes = require("./src/routes/roomRoutes");
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.json({

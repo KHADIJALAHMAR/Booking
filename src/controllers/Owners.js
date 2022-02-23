@@ -1,7 +1,7 @@
 const { returnErrorAsResponse } = require("../functions");
 
 // user model
-const { User, RoomsGroup, Booking, BookingRoom } = require("../models");
+const { User, RoomsGroup, Booking, Hotel } = require("../models");
 // To optimize
 const getAcceptedOwners = (req, res) => {
   User.find((err, users) => {
@@ -109,10 +109,9 @@ const deleteRoom = async (req, res) => {
   const roomId = req.params.roomId;
   
   try {
-    const roomQte = await RoomsGroup.findById(roomId).select('room_quantity');
-      console.log(roomQte, typeof roomQte);
-    
-    const room = await RoomsGroup.findByIdAndUpdate(roomId, {room_quantity: roomQte.room_quantity - 1});
+    const roomQte = await RoomsGroup.findById(roomId).select('room_quantity').room_quantity;
+
+    const room = await RoomsGroup.findByIdAndUpdate(roomId, {room_quantity: roomQte - 1});
     if (!room) res.status(404).json({ message: "no room found" });
     res.json({ message: "room deleted successfully !!" });
   } catch (error) {
@@ -120,26 +119,63 @@ const deleteRoom = async (req, res) => {
   }
 };
 
-const acceptBooking = (req, res) => {
-  // I must do function for changing status of booking from true to false
-  let bookingId = req.body.bookingId;
-  const roomId = req.body.roomId;
+const acceptBooking = async (req, res) => {
+  const bookingId = req.params.bookingId;
+
   try {
-    // get rooms have the same booking_id
-    BookingRoom.findOne(
-      { booking_id: bookingId, room_id: roomId },
-      function (err, room) {
-        if (err) console.log(err);
-        res.json({ room });
-      }
-    );
+    const hotel_id = await Booking.findById(bookingId).select('id_hotel').id_hotel;
+    const owner_id = await Hotel.findById(hotel_id).select('userId').userId;
+     
+    if(owner_id === req.tokenData.id){
+      const booking = await Booking.findByIdAndUpdate(bookingId, {status: "accepted"});
+      if (!booking) res.status(404).json({ message: "no booking found" });
+      res.json({ message: "booking accepted!!" });
+    }else {
+      res.json("you do not own an hotel with this booking");
+    }
   } catch (error) {
     res.json(error.message);
   }
 };
 
-const refuseBooking = (req, res) => {
-  
+const refuseBooking = async (req, res) => {
+  const bookingId = req.params.bookingId;
+
+  try {
+    const hotel_id = await Booking.findById(bookingId).select('id_hotel').id_hotel;
+    const owner_id = await Hotel.findById(hotel_id).select('userId').userId;
+
+    if(owner_id === req.tokenData.id){
+      const booking = await Booking.findByIdAndUpdate(bookingId, {status: "refused"});
+      if (!booking) res.status(404).json({ message: "no booking found" });
+      res.json({ message: "booking refused!!" });
+    }else {
+      res.json("you do not own an hotel with this booking");
+    }
+
+  } catch (error) {
+    res.json(error.message);
+  }
+};
+
+const markAsPaid = async (req, res) => {
+  const bookingId = req.params.bookingId;
+
+  try {
+    const hotel_id = await Booking.findById(bookingId).select('id_hotel').id_hotel;
+    const owner_id = await Hotel.findById(hotel_id).select('userId').userId;
+
+    if(owner_id === req.tokenData.id){
+      const booking = await Booking.findByIdAndUpdate(bookingId, {paid: true});
+      if (!booking) res.status(404).json({ message: "no booking found" });
+      res.json({ message: "booking paid!!" });
+    }else {
+      res.json("you do not own an hotel with this booking");
+    }
+
+  } catch (error) {
+    res.json(error.message);
+  }
 };
 
 module.exports = {

@@ -55,7 +55,7 @@ const getRefusedOwners = (req, res) => {
     }
   });
 };
-
+// Pending Method
 const getBannedOwners = (req, res) => {};
 
 const createRoom = (req, res) => {
@@ -119,9 +119,22 @@ const deleteRoom = async (req, res) => {
   }
 };
 
-const acceptBooking = async (req, res) => {
-  const bookingId = req.params.bookingId;
 
+const updateOwner = async (req, res )=>{
+  try{
+    const edite = await User.findById(req.body.ownerId)
+    Object.assign(edite ,req.body)
+    edite.save();
+    res.status(201).json(edite);
+  }catch(error){
+    res.status(400).json({error :error.message});
+  }
+}
+// Pending Method
+const acceptBooking = (req, res) => {
+  // I must do function for changing status of booking from true to false
+  let bookingId = req.body.bookingId;
+  const roomId = req.body.roomId;
   try {
     const hotel_id = await Booking.findById(bookingId).select('id_hotel').id_hotel;
     const owner_id = await Hotel.findById(hotel_id).select('userId').userId;
@@ -187,4 +200,5 @@ module.exports = {
   deleteRoom,
   acceptBooking,
   refuseBooking,
+  updateOwner,
 };

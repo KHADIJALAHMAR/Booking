@@ -30,8 +30,9 @@ const HotelSchema = new mongoose.Schema({
     userId :{
         type :mongoose.Schema.Types.ObjectId,
         ref : "User"
-    }
-});
+    },
+
+} );
 
 HotelSchema.pre('remove', function(next) {
     RoomsGroup.remove({hotel_id: this._id}).exec();

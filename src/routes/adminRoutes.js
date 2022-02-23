@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-// reuiring Authorization By Roles Middleware
+// requiring Authorization By Roles Middleware
 const { authorizeWithRole } = require("../middlewares/authorizeUser");
 
 // requiring controllers

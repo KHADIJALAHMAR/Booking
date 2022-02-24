@@ -3,15 +3,7 @@ const express = require("express");
 
 
 
-const getCustomers = async (req, res) =>{
-    try{
-        await User.find({"role.name" : "customer"}).exec().then(customers => {
-            res.status(200).json(customers);
-        });
-    } catch(err) {
-        res.status(400).json({error: err.message});
-    }
-}
+
 
 
 
@@ -72,7 +64,6 @@ const getBannedUsers = (req, res) =>{
 
 
 module.exports = {
-    getCustomers,
     createBooking ,
     getBannedUsers,
     updateBooking,

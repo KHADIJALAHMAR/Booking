@@ -18,6 +18,10 @@ router
   .put(authorizeWithRole("admin"), Admins.updateUser);
 
 router
+.route('/custumers')
+.get(authorizeWithRole("admin") ,Admins.getCustomers);
+
+router
   .route("/owner/delete")
   .delete(authorizeWithRole("admin"), Admins.deleteUser);
 

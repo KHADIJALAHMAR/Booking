@@ -11,9 +11,7 @@ router
 .route('/banned')
 .get(Admins.getBannedUsers);
 
-router
-.route('/')
-.get(Customers.getCustomers);
+
 
 router
 .route('/booking')

@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 8000;
 
@@ -7,6 +8,7 @@ const PORT = process.env.PORT || 8000;
 require("./src/config/mongoose");
 
 // requiring middlewares
+
 const cookieParser = require("cookie-parser");
 const { authorizeToken } = require("./src/middlewares/authorizeUser");
 
@@ -21,6 +23,7 @@ const ownerRoutes = require("./src/routes/ownerRoutes");
 const roomRoutes = require("./src/routes/roomRoutes");
 
 // using middlewares
+app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

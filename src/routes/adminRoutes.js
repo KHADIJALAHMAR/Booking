@@ -5,13 +5,17 @@ const router = express.Router();
 const { authorizeWithRole } = require("../middlewares/authorizeUser");
 
 // requiring controllers
-const {Admins} = require('../controllers');
+const { Admins } = require("../controllers");
 
 //  Routes
 
 router
   .route("/owner/create")
   .post(authorizeWithRole("admin"), Admins.createUser);
+
+router
+  .route("/owners")
+  .get(authorizeWithRole("admin"), Admins.getOwners);
 
 router
   .route("/owner/update")

@@ -8,16 +8,6 @@ const {
 
 
 
-// get custumer
-const getCustomers = async (req, res) =>{
-  try{
-      await User.find({"role.name" : "customer"}).exec().then(customers => {
-          res.status(200).json(customers);
-      });
-  } catch(err) {
-      res.status(400).json({error: err.message});
-  }
-}
 
 // create an owner
 const createUser = (req, res) => {
@@ -121,6 +111,5 @@ module.exports = {
   refuseHotel,
   getBannedUsers,
   getAcceptedHotels,
-  getRefusedHotels,
-  getCustomers
+  getRefusedHotels
 };

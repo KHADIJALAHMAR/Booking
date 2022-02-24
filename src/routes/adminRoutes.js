@@ -5,7 +5,7 @@ const router = express.Router();
 const { authorizeWithRole } = require("../middlewares/authorizeUser");
 
 // requiring controllers
-const {Admins} = require('../controllers');
+const {Admins ,Customers} = require('../controllers');
 
 //  Routes
 
@@ -19,7 +19,7 @@ router
 
 router
 .route('/custumers')
-.get(authorizeWithRole("admin") ,Admins.getCustomers);
+.get(authorizeWithRole("admin") ,Customers.getCustomers);
 
 router
   .route("/owner/delete")

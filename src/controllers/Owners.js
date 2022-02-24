@@ -131,7 +131,7 @@ const updateOwner = async (req, res )=>{
   }
 }
 // Pending Method
-const acceptBooking = (req, res) => {
+const acceptBooking = async(req, res) => {
   // I must do function for changing status of booking from true to false
   let bookingId = req.body.bookingId;
   const roomId = req.body.roomId;

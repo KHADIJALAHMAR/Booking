@@ -14,7 +14,7 @@ router
   .post(authorizeWithRole("admin"), Admins.createUser);
 
 router
-  .route("/owners")
+  .route("/owner/owners")
   .get(authorizeWithRole("admin"), Admins.getOwners);
 
 router

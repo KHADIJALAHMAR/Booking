@@ -44,9 +44,8 @@ const createUser = (req, res) => {
 
 // get owners
 const getOwners = (req, res) => {
-  const role = req.body.role;
   try {
-    User.find({ role: role }, function (err, owners) {
+    User.find({ "role.name": "owner" }, function (err, owners) {
       if (err) res.status(404).json({ err: err.message });
       res.status(200).json({ owners });
     });

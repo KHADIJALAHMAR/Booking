@@ -13,9 +13,7 @@ router
   .route("/owner/create")
   .post(authorizeWithRole("admin"), Admins.createUser);
 
-router
-  .route("/owner/owners")
-  .get(authorizeWithRole("admin"), Owners.getOwners);
+router.route("/owner/owners").get(authorizeWithRole("admin"), Owners.getOwners);
 
 router
   .route("/owner/update/:userId")
@@ -28,6 +26,16 @@ router
 router
   .route("/owner/accept")
   .put(authorizeWithRole("admin"), Admins.acceptOwner);
+
+router
+  .route("/owner/pending")
+  .get(authorizeWithRole("admin"), Owners.getPendingOwners);
+router
+  .route("/owner/accepted")
+  .get(authorizeWithRole("admin"), Owners.getAcceptedOwners);
+router
+  .route("/owner/refused")
+  .get(authorizeWithRole("admin"), Owners.getRefusedOwners);
 
 router.route("/owner/refuse").put(Admins.refuseOwner);
 

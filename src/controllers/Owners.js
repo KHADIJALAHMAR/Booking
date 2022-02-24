@@ -29,6 +29,7 @@ const getAcceptedOwners = (req, res) => {
     }
   });
 };
+
 // To optimize
 const getRefusedOwners = (req, res) => {
   User.find((err, users) => {
@@ -55,6 +56,7 @@ const getRefusedOwners = (req, res) => {
     }
   });
 };
+
 // get all owners
 const getOwners = (req, res) => {
   try {
@@ -66,6 +68,35 @@ const getOwners = (req, res) => {
     console.log(error);
   }
 };
+
+// get pending owners
+const getPendingOwners = (req, res) => {
+  User.find((err, users) => {
+    if (err) {
+      res.json({
+        error: err,
+      });
+    }
+    if (users) {
+      let owners = [];
+      users.forEach((user) => {
+        if (user.role.status == "pending") {
+          let owner = {
+            username: user.username,
+            email: user.email,
+            password: user.password,
+            gender: user.gender,
+            roleName: user.role.name,
+            status: user.role.status,
+          };
+          owners.push(owner);
+        }
+      });
+      res.json(owners);
+    }
+  });
+};
+
 // Pending Method
 const getBannedOwners = (req, res) => {};
 
@@ -168,6 +199,7 @@ module.exports = {
   getAcceptedOwners,
   getRefusedOwners,
   getOwners,
+  getPendingOwners,
   getBannedOwners,
   createRoom,
   updateRoom,

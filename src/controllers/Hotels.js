@@ -24,15 +24,22 @@ const getHotelsbyowner = async (req, res) => {
 
 // Create An Hotel
 const createHotel = async (req, res) => {
+  const images = [];
+  
+  req.files.map((file,index) => {
+    images.push(file.originalname);
+  })
+
   const createhotel = await Hotel.create({
     name: req.body.name,
     descreption: req.body.descreption,
-    image_cover: req.body.mage_cover,
-    images: req.body.images,
+    image_cover: images[0],
+    images: images,
     stars: req.body.stars,
     status: req.body.status,
     userId: req.tokenData.id,
   });
+
   try {
     res.json(createhotel);
   } catch (error) {
@@ -98,17 +105,15 @@ const getHotelsByStars = (req, res) => {
   } else {
     res.status(400).send();
   }
-};
-const getRoomsByPrice = (req, res) => {
-  const room = RoomsGroup.find({}, { price: req.body.price })
-    .populate("hotel_id", "name")
-    .exec()
-    .then(() => {
-      res.json(room);
-    })
-    .catch((error) => {
-      res.json(error);
-    });
+}
+const getRoomsByPrice = (req ,res )=>{
+  RoomsGroup.find({price :req.body.price}).populate('hotel_id',"name").exec()
+  .then((room) => {
+    console.log(room);
+    res.json(room)
+  }).catch((error)=>{
+    res.json(error);
+  })
 };
 
 // Fillter Hotels By Date

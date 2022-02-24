@@ -5,7 +5,7 @@ const router = express.Router();
 const { authorizeWithRole } = require("../middlewares/authorizeUser");
 
 // requiring controllers
-const { Admins } = require("../controllers");
+const { Admins, Owners } = require("../controllers");
 
 //  Routes
 
@@ -15,10 +15,10 @@ router
 
 router
   .route("/owner/owners")
-  .get(authorizeWithRole("admin"), Admins.getOwners);
+  .get(authorizeWithRole("admin"), Owners.getOwners);
 
 router
-  .route("/owner/update")
+  .route("/owner/update/:userId")
   .put(authorizeWithRole("admin"), Admins.updateUser);
 
 router

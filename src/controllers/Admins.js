@@ -42,22 +42,10 @@ const createUser = (req, res) => {
   })();
 };
 
-// get owners
-const getOwners = (req, res) => {
-  try {
-    User.find({ "role.name": "owner" }, function (err, owners) {
-      if (err) res.status(404).json({ err: err.message });
-      res.status(200).json({ owners });
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 // update owner infos
 const updateUser = async (req, res) => {
   try {
-    const user = await User.findById(req.body.userId);
+    const user = await User.findById(req.params.userId);
     Object.assign(user, req.body);
     user.save();
     res.json(user);
@@ -109,7 +97,6 @@ const getRefusedHotels = (req, res) => {};
 
 module.exports = {
   createUser,
-  getOwners,
   updateUser,
   deleteUser,
   acceptOwner,

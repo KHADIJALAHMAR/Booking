@@ -13,7 +13,7 @@ const getAcceptedOwners = (req, res) => {
     if (users) {
       let owners = [];
       users.forEach((user) => {
-        if (user.role.status == true) {
+        if (user.role.status == "accepted") {
           let owner = {
             username: user.username,
             email: user.email,
@@ -40,7 +40,7 @@ const getRefusedOwners = (req, res) => {
     if (users) {
       let owner = {};
       users.forEach((user) => {
-        if (user.role.status == false) {
+        if (user.role.status == "refused") {
           owner = {
             username: user.username,
             email: user.email,
@@ -55,6 +55,17 @@ const getRefusedOwners = (req, res) => {
     }
   });
 };
+// get all owners
+const getOwners = (req, res) => {
+  try {
+    User.find({ "role.name": "owner" }, function (err, owners) {
+      if (err) res.status(404).json({ err: err.message });
+      res.status(200).json({ owners });
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 // Pending Method
 const getBannedOwners = (req, res) => {};
 
@@ -65,12 +76,12 @@ const createRoom = (req, res) => {
     price: req.body.price,
     hotel_id: req.body.hotel_id,
     room_type_id: req.body.room_type_id,
-    images : []
+    images: [],
   };
 
-  req.files.map((file,index) => {
+  req.files.map((file, index) => {
     room.images.push(file.originalname);
-  })
+  });
 
   try {
     (async () => {
@@ -107,12 +118,14 @@ const updateRoom = async (req, res) => {
 
 const deleteRoom = async (req, res) => {
   const roomId = req.params.roomId;
-  
+
   try {
-    const roomQte = await RoomsGroup.findById(roomId).select('room_quantity');
-      console.log(roomQte, typeof roomQte);
-    
-    const room = await RoomsGroup.findByIdAndUpdate(roomId, {room_quantity: roomQte.room_quantity - 1});
+    const roomQte = await RoomsGroup.findById(roomId).select("room_quantity");
+    console.log(roomQte, typeof roomQte);
+
+    const room = await RoomsGroup.findByIdAndUpdate(roomId, {
+      room_quantity: roomQte.room_quantity - 1,
+    });
     if (!room) res.status(404).json({ message: "no room found" });
     res.json({ message: "room deleted successfully !!" });
   } catch (error) {
@@ -120,17 +133,16 @@ const deleteRoom = async (req, res) => {
   }
 };
 
-
-const updateOwner = async (req, res )=>{
-  try{
-    const edite = await User.findById(req.body.ownerId)
-    Object.assign(edite ,req.body)
+const updateOwner = async (req, res) => {
+  try {
+    const edite = await User.findById(req.body.ownerId);
+    Object.assign(edite, req.body);
     edite.save();
     res.status(201).json(edite);
-  }catch(error){
-    res.status(400).json({error :error.message});
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
-}
+};
 // Pending Method
 const acceptBooking = (req, res) => {
   // I must do function for changing status of booking from true to false
@@ -155,6 +167,7 @@ const refuseBooking = (req, res) => {};
 module.exports = {
   getAcceptedOwners,
   getRefusedOwners,
+  getOwners,
   getBannedOwners,
   createRoom,
   updateRoom,

@@ -45,7 +45,7 @@ const createUser = (req, res) => {
 // update owner infos
 const updateUser = async (req, res) => {
   try {
-    const user = await User.findById(req.body.userId);
+    const user = await User.findById(req.params.userId);
     Object.assign(user, req.body);
     user.save();
     res.json(user);

@@ -12,10 +12,6 @@ router
 .get(Admins.getBannedUsers);
 
 router
-.route('/')
-.get(Customers.getCustomers);
-
-router
 .route('/booking')
 .post(Customers.createBooking);
 

@@ -32,7 +32,7 @@ const createUser = (req, res) => {
         gender: infos.gender,
         role:
           infos.role === "owner"
-            ? { name: infos.role, status: false }
+            ? { name: infos.role, status: "pending" }
             : { name: infos.role },
       });
       returnMessageAsResponse(res, "User created successfully");

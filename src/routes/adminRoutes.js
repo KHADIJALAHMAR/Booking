@@ -5,13 +5,11 @@ const router = express.Router();
 const { authorizeWithRole } = require("../middlewares/authorizeUser");
 
 // requiring controllers
-const { Admins, Owners } = require("../controllers");
+const { Admins, Owners, Customers } = require("../controllers");
 
 //  Routes
 
-router
-  .route("/owner/create")
-  .post(authorizeWithRole("admin"), Admins.createUser);
+router.route("/owner/create").post(Admins.createUser);
 
 router.route("/owner/owners").get(authorizeWithRole("admin"), Owners.getOwners);
 
@@ -38,6 +36,10 @@ router
   .get(authorizeWithRole("admin"), Owners.getRefusedOwners);
 
 router.route("/owner/refuse").put(Admins.refuseOwner);
+
+router
+.route('/customers')
+.get(Customers.getCustomers);
 
 router.route("/user/ban").put(Admins.banUser);
 

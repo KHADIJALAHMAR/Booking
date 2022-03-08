@@ -3,15 +3,15 @@ const router = express.Router();
 
 // requiring controllers
 const { Hotels, Owners, Admins , hotelUpload} = require("../controllers");
-const { authorizeWithRole } = require("../middlewares/authorizeUser");
+const { authorizeWithRole, authorizeToken } = require("../middlewares/authorizeUser");
 
 router.route("/:id")
     .get(authorizeWithRole("owner"), Hotels.getHotelsbyowner);
 
 router
   .route("/")
-  .get(authorizeWithRole("admin", "owner"), Hotels.getHotels)
-  .post(authorizeWithRole("admin", "owner"),hotelUpload.array("hotel-image", 8), Hotels.createHotel);
+  .get( Hotels.getHotels)
+  .post(authorizeToken ,hotelUpload.array("hotel-image", 8), Hotels.createHotel);
 
 router.route("/accepted")
     .get(Admins.getAcceptedHotels);

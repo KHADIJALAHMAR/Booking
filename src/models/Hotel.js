@@ -11,18 +11,16 @@ const HotelSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    // images:[{
-    //     data: Buffer,
-    //     contentType: String,
-    // }],
-    // image_cover:{
-    //     data: Buffer,
-    //     contentType: String,
-    // },
-    // stars :{
-    //     type: Number,
-    //     default: 0
-    // },
+    images:[{
+        type: String,
+    }],
+    image_cover:{
+        type: String,
+    },
+    stars :{
+        type: Number,
+        default: 0
+    },
     // status :{
     //     type: Boolean, 
     //     default: false

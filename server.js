@@ -38,7 +38,7 @@ app.get("/", (req, res) => {
 app.use("/auth", authentificationRoutes);
 
 // Authorize Middleware
-app.use(authorizeToken);
+// app.use(authorizeToken);
 
 // Other Routes
 app.use("/admin", adminRoutes);

@@ -16,7 +16,7 @@ const { authorizeToken } = require("./src/middlewares/authorizeUser");
 const adminRoutes = require("./src/routes/adminRoutes");
 const authentificationRoutes = require("./src/routes/authentificationRoutes");
 // const bookingRoutes = require("./src/routes/bookingRoutes");
-// const customerRoutes = require("./src/routes/customerRoutes");
+const customerRoutes = require("./src/routes/customerRoutes");
 const hotelRoutes = require("./src/routes/hotelRoutes");
 const ownerRoutes = require("./src/routes/ownerRoutes");
 // const reviewRoutes = require("./src/routes/reviewRoutes");
@@ -42,7 +42,7 @@ app.use("/auth", authentificationRoutes);
 
 // Other Routes
 app.use("/admin", adminRoutes);
-// app.use("/customers", customerRoutes);
+app.use("/customers", customerRoutes);
 app.use("/hotels", hotelRoutes);
 app.use("/owners", ownerRoutes);
 

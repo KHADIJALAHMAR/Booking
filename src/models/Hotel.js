@@ -12,21 +12,19 @@ const HotelSchema = new mongoose.Schema({
         required: true
     },
     images:[{
-        data: Buffer,
-        contentType: String,
+        type: String,
     }],
     image_cover:{
-        data: Buffer,
-        contentType: String,
+        type: String,
     },
     stars :{
         type: Number,
         default: 0
     },
-    status :{
-        type: Boolean, 
-        default: false
-    },
+    // status :{
+    //     type: Boolean, 
+    //     default: false
+    // },
     userId :{
         type :mongoose.Schema.Types.ObjectId,
         ref : "User"

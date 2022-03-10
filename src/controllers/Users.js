@@ -27,7 +27,7 @@ const handleRegister = (req,res) => {
                     email: infos[1], 
                     password: infos[2], 
                     gender: infos[5], 
-                    role: infos[4] === 'owner' ? {name: infos[4] , status: false } : {name: infos[4] }
+                    role: infos[4] === 'owner' ? {name: infos[4] , status: "pending" } : {name: infos[4] }
                 });
                 returnMessageAsResponse(res,'User created successfully');
             }catch(err) {

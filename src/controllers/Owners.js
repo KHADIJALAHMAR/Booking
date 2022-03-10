@@ -100,23 +100,31 @@ const getPendingOwners = (req, res) => {
 // Pending Method
 const getBannedOwners = (req, res) => {};
 
+const updateOwner = async (req, res) => {
+  try {
+    const edite = await User.findById(req.body.ownerId);
+    Object.assign(edite, req.body);
+    edite.save();
+    res.status(201).json(edite);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 // Pending Method
-const acceptBooking = async (req, res) => {
+const acceptBooking = async(req, res) => {
   // I must do function for changing status of booking from true to false
   let bookingId = req.body.bookingId;
   const roomId = req.body.roomId;
   try {
-    const hotel_id = await Booking.findById(bookingId).select("id_hotel")
-      .id_hotel;
-    const owner_id = await Hotel.findById(hotel_id).select("userId").userId;
-
-    if (owner_id === req.tokenData.id) {
-      const booking = await Booking.findByIdAndUpdate(bookingId, {
-        status: "accepted",
-      });
+    const hotel_id = await Booking.findById(bookingId).select('id_hotel').id_hotel;
+    const owner_id = await Hotel.findById(hotel_id).select('userId').userId;
+     
+    if(owner_id === req.tokenData.id){
+      const booking = await Booking.findByIdAndUpdate(bookingId, {status: "accepted"});
       if (!booking) res.status(404).json({ message: "no booking found" });
       res.json({ message: "booking accepted!!" });
-    } else {
+    }else {
       res.json("you do not own an hotel with this booking");
     }
   } catch (error) {
@@ -128,19 +136,17 @@ const refuseBooking = async (req, res) => {
   const bookingId = req.params.bookingId;
 
   try {
-    const hotel_id = await Booking.findById(bookingId).select("id_hotel")
-      .id_hotel;
-    const owner_id = await Hotel.findById(hotel_id).select("userId").userId;
+    const hotel_id = await Booking.findById(bookingId).select('id_hotel').id_hotel;
+    const owner_id = await Hotel.findById(hotel_id).select('userId').userId;
 
-    if (owner_id === req.tokenData.id) {
-      const booking = await Booking.findByIdAndUpdate(bookingId, {
-        status: "refused",
-      });
+    if(owner_id === req.tokenData.id){
+      const booking = await Booking.findByIdAndUpdate(bookingId, {status: "refused"});
       if (!booking) res.status(404).json({ message: "no booking found" });
       res.json({ message: "booking refused!!" });
-    } else {
+    }else {
       res.json("you do not own an hotel with this booking");
     }
+
   } catch (error) {
     res.json(error.message);
   }
@@ -150,26 +156,20 @@ const markAsPaid = async (req, res) => {
   const bookingId = req.params.bookingId;
 
   try {
-    const hotel_id = await Booking.findById(bookingId).select("id_hotel")
-      .id_hotel;
-    const owner_id = await Hotel.findById(hotel_id).select("userId").userId;
+    const hotel_id = await Booking.findById(bookingId).select('id_hotel').id_hotel;
+    const owner_id = await Hotel.findById(hotel_id).select('userId').userId;
 
-    if (owner_id === req.tokenData.id) {
-      const booking = await Booking.findByIdAndUpdate(bookingId, {
-        paid: true,
-      });
+    if(owner_id === req.tokenData.id){
+      const booking = await Booking.findByIdAndUpdate(bookingId, {paid: true});
       if (!booking) res.status(404).json({ message: "no booking found" });
       res.json({ message: "booking paid!!" });
-    } else {
+    }else {
       res.json("you do not own an hotel with this booking");
     }
+
   } catch (error) {
     res.json(error.message);
   }
-};
-
-const updateOwner = async (req, res) => {
-  console.log("UpdateOwner method");
 };
 
 module.exports = {

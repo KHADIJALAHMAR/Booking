@@ -64,17 +64,6 @@ const deleteRoom = async (req, res) => {
   }
 };
 
-const updateOwner = async (req, res) => {
-  try {
-    const edite = await User.findById(req.body.ownerId);
-    Object.assign(edite, req.body);
-    edite.save();
-    res.status(201).json(edite);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
-
 // search for room with param
 const getRooms = (req, res) => {
   const hotelId = req.body.hotelId;

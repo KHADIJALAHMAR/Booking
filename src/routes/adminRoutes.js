@@ -38,7 +38,7 @@ router
 router.route("/owner/refuse").put(Admins.refuseOwner);
 
 router
-.route('/customers')
+.route('/customers/:_limit')
 .get(Customers.getCustomers);
 
 router.route("/user/ban").put(Admins.banUser);

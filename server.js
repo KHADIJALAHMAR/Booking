@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 8000;
-const cors = require("cors");
+
 
 // requiring mongoose
 require("./src/config/mongoose");
@@ -28,7 +28,6 @@ app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
 
 app.get("/", (req, res) => {
   res.json({

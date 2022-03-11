@@ -18,9 +18,9 @@ router.route("/banned")
 router.route("/room")
     .post(authorizeWithRole("owner"), roomUpload.array('room-image', 8), Owners.createRoom);
 
-router.route("/room/:roomId")
-    .put(authorizeWithRole("owner"), Owners.updateRoom)
-    .delete(authorizeWithRole("owner"), Owners.deleteRoom);
+router.route("/room")
+    .put(Owners.updateRoom)
+    .delete(Owners.deleteRoom);
 
 router.route("/booking/accept")
     .put(authorizeWithRole("owner"), Owners.acceptBooking);

@@ -29,7 +29,6 @@ const HotelSchema = new mongoose.Schema({
         type :mongoose.Schema.Types.ObjectId,
         ref : "User"
     },
-
 } );
 
 HotelSchema.pre('remove', function(next) {

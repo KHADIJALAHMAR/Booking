@@ -1,4 +1,4 @@
-// const { RoomType } = require("../models");
+const { RoomType,RoomsGroup} = require("../models");
 
 const createRoom = (req, res) => {
   let room = {
@@ -48,7 +48,7 @@ const updateRoom = async (req, res) => {
 };
 
 const deleteRoom = async (req, res) => {
-  const roomId = req.params.roomId;
+  const roomId = req.body.roomId;
 
   try {
     const roomQte = await RoomsGroup.findById(roomId).select("room_quantity");
@@ -82,8 +82,6 @@ const getRooms = (req, res) => {
 //
 const getRoomsByPrice = (req, res) => {};
 
-
-const { RoomType } = require("../models");
 
 const createRoomType = async (req, res) => {
   let roomType = {

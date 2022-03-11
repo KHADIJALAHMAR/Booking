@@ -2,10 +2,6 @@ const mongoose = require("mongoose");
 
 // create Shema
 const RoomSchema = new mongoose.Schema({
-  number: {
-    type: Number,
-    required: true,
-  },
   room_quantity: {
     type: Number,
     required: true,

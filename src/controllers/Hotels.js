@@ -4,46 +4,43 @@ const { Hotel, Location, RoomsGroup, Booking } = require("../models");
 const getHotels = async (req, res) => {
   const hotels = await Hotel.find();
 
-  try {
-    res.json(hotels);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
 
-// Get the Owner Hotel by id
-const getHotelsbyowner = async (req, res) => {
-  const hotels = await Hotel.find({ user_id: req.params.id });
-
-  try {
-    res.json(hotels);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
+//Get the Hotels
+const getHotels = async (req, res) =>{
+  if(req.tokenData.role.name === "admin"){   
+    const hotels = await  Hotel.find()
+    try{
+      res.json(hotels);
+    } catch (error){
+    res.status(400).json({error:error.message});
+    }
+  }else if(req.tokenData.role.name === "owner"){   
+     const hotelowner = req.tokenData.id
+    const getownerhotel = await Hotel.find({userId:hotelowner})
+       try{
+         res.status(200).json(getownerhotel);
+       }catch(error){
+         res.status(400).json({error:error.message});
+       }
+    }else{
+      res.status(400).json({error:"The Hotels is Not Yours !!"})
+    }
+  };
 
 // Create An Hotel
 const createHotel = async (req, res) => {
-  // res.json(req.tokenData);
+    const createhotel = await Hotel.create({
 
-  const images = [];
-  console.log(req.body);
-  req.files.map((file,index) => {
+      name:req.body.name,
+      descreption:req.body.descreption,
+      image_cover:req.body.mage_cover, 
+      images:req.body.images,
+      stars:req.body.stars,
+      status:req.body.status,
+      userId:req.tokenData.id,
 
-    images.push(file.originalname);
-  })
-
-  const createhotel = await Hotel.create({
-    name: req.body.name,
-    descreption: req.body.description,
-    image_cover: images[0],
-    images: images,
-    stars: req.body.stars,
-    // status: req.body.status,
-    userId: req.tokenData._id,
-  });
-
-  try {
+    })
+  try{
     res.json(createhotel);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -53,59 +50,98 @@ const createHotel = async (req, res) => {
 // Update An Hotel
 
 const updateHotel = async (req, res) => {
-  try {
-    const updatehotel = await Hotel.findById(req.body.HotelId);
-    Object.assign(updatehotel, req.body);
-    updatehotel.save();
-    res.status(201).json(updatehotel);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  
+  if(req.tokenData.role.name === "admin") {
+    try {
+      const updatehotelbyadmin = await Hotel.findById( req.params.id);
+      
+      Object.assign(updatehotelbyadmin ,req.body)
+      updatehotel.save();
+       res.status(201).json(updatehotelbyadmin);
+     } catch (error) {
+       res.status(500).json({error :error.message});
+     }
+  }else if ((req.tokenData.role.name === "owner")){
+    const ownerhoteltoupdate = (req.tokenData.id)
+    const hotelownertoupdate = await Hotel.find({userId:ownerhoteltoupdate})
+    try {
+      const updatehotel = await Hotel.findById(hotelownertoupdate);
+      Object.assign(updatehotel ,req.body)
+      updatehotel.save();
+       res.status(201).json(updatehotel);
+     } catch (error) {
+       res.status(500).json({error :error.message});
+     }
+  }else{
+    res.status(400).json({error:"The Hotels is Not Yours !!"})
   }
-};
+ }
+
 
 // Delete An Hotel
-const deleteHotel = async (req, res) => {
-  try {
-    const deletehotel = await Hotel.findByIdAndDelete(req.body.HotelId);
-    if (!deletehotel) res.status(404).json({ message: "No Hotel Found" });
-    res.json({ message: "Hotel was deleted with success !!" });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
+const deleteHotel = async (req, res) => { 
+ 
+    if(req.tokenData.role.name === "admin") {
+      try{
+        const deletehotel =  await Hotel.findByIdAndDelete(req.params.HotelId)
+        if (!deletehotel) res.status(404).json({ message: "No Hotel Found" });
+        res.json({ message: "Hotel Has deleted successfully !!" });
+      } catch (error) {
+        res.status(400).json({error:error.message});
+      }
+    }else if((req.tokenData.role.name === "owner")){
+       const ownerhotel = (req.tokenData.id)
+       const hotelOwner = await Hotel.find({userId:ownerhotel})
+       
+        try{  
+          const deletehotel =  await Hotel.findByIdAndDelete(hotelOwner)
+          if (!deletehotel) res.status(404).json({ message: "No Hotel Found" });
+          res.json({ message: "Hotel Has deleted  successfully !!" });
+          } catch (error) {
+          res.status(400).json({error:error.message});
+        }
+      
+    }   
 };
 
 ////////////////filters methods/////////////////
 
-// Filter Hotel By Name
-const getHotelsByName = (req, res) => {
-  const hotelsbyname = Hotel.find({ where: { name: req.body.name } });
 
-  try {
-    res.json(hotelsbyname);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
+// Filter Hotel By Name
+const getHotelsByName = async (req, res) => {
+  try{
+    const hotelbyname = await Hotel.find({name:req.body.name}).exec()
+    if(!hotelbyname) res.status(404).json({ message: "not hotel found"});
+    res.status(200).json(hotelbyname)
+  }catch(error){
+    res.status(400).json({error:error.message})
   }
-};
+}
+
+
+
 
 // Filtre Hotels By City
-const getHotelsByCity = (req, res) => {
-  Location.find({
-    where: {
-      city: req.body.name,
-    },
-  }).then((hotelsbycity) => {
-    res.json(hotelsbycity);
-  });
-};
+const getHotelsByCity  = async (req, res) => {
+  try{
+    const hotelbycity =  await Location.find({city: req.body.city}).populate("hotel_id","name").exec()
+  if(!hotelbycity) res.status(404).json({message: "hotel not found"})
+  res.status(200).json(hotelbycity)
+  }catch(error){
+    res.status(400).json({error:error.message})
+  }
+}
+
 
 // Filter Hotels By Stars
-const getHotelsByStars = (req, res) => {
-  const star = req.body.name;
-  if (star && star >= 0 && star <= 5) {
-    Hotel.where({ star: star }).then(() => {
-      res.json();
-    });
-  } else {
+const getHotelsByStars = (req, res) =>{
+  const star = req.body.name
+  if(star   &&   star >= 0 && star <= 5 && typeof star === "number"){
+    Hotel.where({star:star})
+    .then(() => {
+      res.json()
+    })
+  }else{
     res.status(400).send();
   }
 }
@@ -121,31 +157,14 @@ const getRoomsByPrice = (req ,res )=>{
 
 // Fillter Hotels By Date
 const getHotelsByDate = (req, res) => {
-  const dateFrom = new Date(req.body.dateFrom); //12
-  const dateTo = new Date(req.body.dateTo); //15
+  const dateFrom = req.body.dateFrom;
+  const dateTo = req.body.dateTo;
 
-  Booking.find(
-    {
-      $and: [
-        {
-          $or: [
-            { date_from: { $lt: dateFrom } },
-            { date_from: { $gt: dateTo } },
-          ],
-        },
-        { $or: [{ date_to: { $gt: dateTo } }, { date_to: { $lt: dateFrom } }] },
-      ],
-    },
-    function (err, data) {
-      if (err) console.log(err);
-      if (data) {
-        res.json({ data });
-      }
-    }
-  );
-};
+  console.log(dateFrom, dateTo)
+}
 
-// This Method used To not export all The Methods, so in this case,
+
+// This Method used To not export all The Methods, so in this case, 
 // we will use one method in route to filter by name city and stars
 
 const searchFilters = (req, res) => {
@@ -165,6 +184,8 @@ module.exports = {
   deleteHotel,
   createHotel,
   updateHotel,
+  // getHotelsbyowner,
+  getHotelsByName,
   getHotelsbyowner,
   getRoomsByPrice,
   getHotelsByDate,

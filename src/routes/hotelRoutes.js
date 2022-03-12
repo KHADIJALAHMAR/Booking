@@ -1,13 +1,18 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
 // requiring controllers
-const {Hotels, Owners , Admins} =require('../controllers');
-const { authorizeWithRole } = require('../middlewares/authorizeUser');
+const { Hotels, Owners, Admins , hotelUpload} = require("../controllers");
+const { authorizeWithRole, authorizeToken } = require("../middlewares/authorizeUser");
 
+router.route("/:id")
+    .get(authorizeWithRole("owner"), Hotels.getHotelsbyowner);
 
+router
+  .route("/")
+  .get( Hotels.getHotels)
+  .post(authorizeToken ,hotelUpload.array("hotel-image", 8), Hotels.createHotel);
 
- 
 
 router.route("/") 
 .get(authorizeWithRole('admin', 'owner'),Hotels.getHotels)
@@ -24,7 +29,7 @@ router.route("/accepted")
 
 
 router.route("/refused")
-.get(Admins.getRefusedHotels);
+    .get(Admins.getRefusedHotels);
 
 
 

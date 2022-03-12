@@ -1,6 +1,8 @@
+const { Hotel, Location, RoomsGroup, Booking } = require("../models");
 
-const {Hotel, Location , RoomsGroup} = require('../models')
-
+// Get All The  Hotels acess by admin
+const getHotels = async (req, res) => {
+  const hotels = await Hotel.find();
 
 
 //Get the Hotels
@@ -25,7 +27,6 @@ const getHotels = async (req, res) =>{
     }
   };
 
-
 // Create An Hotel
 const createHotel = async (req, res) => {
     const createhotel = await Hotel.create({
@@ -41,11 +42,10 @@ const createHotel = async (req, res) => {
     })
   try{
     res.json(createhotel);
-  }catch(error){
-    res.status(400).json({error:error.message})
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
-}
-
+};
 
 // Update An Hotel
 
@@ -146,14 +146,14 @@ const getHotelsByStars = (req, res) =>{
   }
 }
 const getRoomsByPrice = (req ,res )=>{
-  const room =RoomsGroup.find({} ,{price :req.body.price}).populate('hotel_id',"name").exec()
-  .then(() => {
+  RoomsGroup.find({price :req.body.price}).populate('hotel_id',"name").exec()
+  .then((room) => {
+    console.log(room);
     res.json(room)
   }).catch((error)=>{
     res.json(error);
   })
 };
-
 
 // Fillter Hotels By Date
 const getHotelsByDate = (req, res) => {
@@ -167,17 +167,16 @@ const getHotelsByDate = (req, res) => {
 // This Method used To not export all The Methods, so in this case, 
 // we will use one method in route to filter by name city and stars
 
-const searchFilters = (req, res) =>{
-  switch(req.body.type){
+const searchFilters = (req, res) => {
+  switch (req.body.type) {
     case "name":
-      return getHotelsByName(req, res)
+      return getHotelsByName(req, res);
     case "city":
-      return getHotelsByCity(req, res)
+      return getHotelsByCity(req, res);
     case "star":
-      return getHotelsByStars(req, res)
+      return getHotelsByStars(req, res);
   }
-}
-
+};
 
 module.exports = {
   getHotels,
@@ -189,4 +188,5 @@ module.exports = {
   getHotelsByName,
   getHotelsbyowner,
   getRoomsByPrice,
-}
+  getHotelsByDate,
+};

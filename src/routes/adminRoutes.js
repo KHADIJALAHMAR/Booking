@@ -5,27 +5,49 @@ const router = express.Router();
 const { authorizeWithRole } = require("../middlewares/authorizeUser");
 
 // requiring controllers
-const {Admins} = require('../controllers');
+const { Admins, Owners, Customers, Users } = require("../controllers");
 
 //  Routes
 
-router
-  .route("/owner/create")
-  .post(authorizeWithRole("admin"), Admins.createUser);
+router.route("/owner/create").post(Admins.createUser);
+
+router.route("/owner/owners").get(authorizeWithRole("admin"), Owners.getOwners);
 
 router
-  .route("/owner/update")
-  .put(authorizeWithRole("admin"), Admins.updateUser);
+  .route("/owner/update/:userId")
+  .put(Admins.updateUser);
+
+router
+.route('/custumers')
+.get(authorizeWithRole("admin") ,Customers.getCustomers);
 
 router
   .route("/owner/delete")
-  .delete(authorizeWithRole("admin"), Admins.deleteUser);
+  .delete(Admins.deleteUser);
 
 router
   .route("/owner/accept")
   .put(authorizeWithRole("admin"), Admins.acceptOwner);
 
+router
+  .route("/owner/pending")
+  .get(authorizeWithRole("admin"), Owners.getPendingOwners);
+router
+  .route("/owner/accepted")
+  .get(authorizeWithRole("admin"), Owners.getAcceptedOwners);
+router
+  .route("/owner/refused")
+  .get(authorizeWithRole("admin"), Owners.getRefusedOwners);
+
 router.route("/owner/refuse").put(Admins.refuseOwner);
+
+router
+.route('/customers/:_limit')
+.get(Customers.getCustomers);
+
+router
+.route('/user/:id')
+.get(Users.getUserById);
 
 router.route("/user/ban").put(Admins.banUser);
 

@@ -27,7 +27,7 @@ const handleRegister = (req,res) => {
                     email: infos[1], 
                     password: infos[2], 
                     gender: infos[5], 
-                    role: infos[4] === 'owner' ? {name: infos[4] , status: false } : {name: infos[4] }
+                    role: infos[4] === 'owner' ? {name: infos[4] , status: "pending" } : {name: infos[4] }
                 });
                 returnMessageAsResponse(res,'User created successfully');
             }catch(err) {
@@ -62,7 +62,21 @@ const handleLogin = (req,res) => {
     })();
 }
 
+
+const getUserById = async (req,res) => {
+    try {
+        await User.findById(req.params.id)
+          .exec()
+          .then((user) => {
+            res.status(200).json(user);
+          });
+      } catch (err) {
+        res.status(400).json({ error: err.message });
+      }
+}
+
 module.exports = {
     handleRegister,
     handleLogin,
+    getUserById
 }

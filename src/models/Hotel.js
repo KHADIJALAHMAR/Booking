@@ -32,8 +32,7 @@ const HotelSchema = new mongoose.Schema({
         required: true,
         ref : "User"
     },
-
-} ,{ timestamps: true } );
+} );
 
 HotelSchema.pre('remove', function(next) {
     RoomsGroup.remove({hotel_id: this._id}).exec();

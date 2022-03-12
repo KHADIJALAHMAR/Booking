@@ -5,7 +5,7 @@ const multer = require("multer");
 const { authorizeWithRole } = require("../middlewares/authorizeUser");
 
 // controller
-const { Owners, roomUpload } = require("../controllers");
+const { Owners, roomUpload, Rooms } = require("../controllers");
 
 // routes
 router
@@ -23,13 +23,13 @@ router
   .post(
     authorizeWithRole("owner"),
     roomUpload.array("room-image", 8),
-    Owners.createRoom
+    Rooms.createRoom
   );
 
 router
-  .route("/room/:roomId")
-  .put(authorizeWithRole("owner"), Owners.updateRoom)
-  .delete(authorizeWithRole("owner"), Owners.deleteRoom);
+  .route("/room")
+  .put(authorizeWithRole("owner"), Rooms.updateRoom)
+  .delete(authorizeWithRole("owner"), Rooms.deleteRoom);
 
 router
   .route("/booking/accept")
@@ -40,7 +40,7 @@ router
   .put(authorizeWithRole("owner"), Owners.refuseBooking);
 
 // route owner
-// router.route("/")
-//     .put(Owners.updateOwner);
+router.route("/")
+    .put(Owners.updateOwner);
 
 module.exports = router;

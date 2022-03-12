@@ -4,6 +4,7 @@ const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 8000;
 
+
 // requiring mongoose
 require("./src/config/mongoose");
 
@@ -16,7 +17,7 @@ const { authorizeToken } = require("./src/middlewares/authorizeUser");
 const adminRoutes = require("./src/routes/adminRoutes");
 const authentificationRoutes = require("./src/routes/authentificationRoutes");
 // const bookingRoutes = require("./src/routes/bookingRoutes");
-// const customerRoutes = require("./src/routes/customerRoutes");
+const customerRoutes = require("./src/routes/customerRoutes");
 const hotelRoutes = require("./src/routes/hotelRoutes");
 const ownerRoutes = require("./src/routes/ownerRoutes");
 // const reviewRoutes = require("./src/routes/reviewRoutes");
@@ -38,11 +39,11 @@ app.get("/", (req, res) => {
 app.use("/auth", authentificationRoutes);
 
 // Authorize Middleware
-// app.use(authorizeToken); 
+// app.use(authorizeToken);
 
 // Other Routes
 app.use("/admin", adminRoutes);
-// app.use("/customers", customerRoutes);
+app.use("/customers", customerRoutes);
 app.use("/hotels", hotelRoutes);
 app.use("/owners", ownerRoutes);
 

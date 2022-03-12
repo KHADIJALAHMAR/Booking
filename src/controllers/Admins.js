@@ -5,6 +5,10 @@ const {
   returnMessageAsResponse,
 } = require("../functions/index");
 
+
+
+
+
 // create an owner
 const createUser = (req, res) => {
   const infos = {
@@ -107,5 +111,5 @@ module.exports = {
   refuseHotel,
   getBannedUsers,
   getAcceptedHotels,
-  getRefusedHotels,
+  getRefusedHotels
 };

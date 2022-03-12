@@ -8,12 +8,13 @@ const { Hotel, Location, RoomsGroup, Booking } = require("../models");
 //Get the Hotels
 const getHotels = async (req, res) => {
   // if (req.tokenData.role.name === "admin") {
-    const hotels = await Hotel.find();
-    try {
-      res.json(hotels);
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
+  console.log(req.params.HotelId);
+  const hotels = await Hotel.find();
+  try {
+    res.json(hotels);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
   // } else if (req.tokenData.role.name === "owner") {
   //   const hotelowner = req.tokenData.id;
   //   const getownerhotel = await Hotel.find({ userId: hotelowner });
@@ -77,13 +78,16 @@ const updateHotel = async (req, res) => {
 // Delete An Hotel
 const deleteHotel = async (req, res) => {
   // if (req.tokenData.role.name === "admin") {
-    try {
-      const deletehotel = await Hotel.findByIdAndDelete(req.params.HotelId);
-      if ((!deletehotel)) { res.status(404).json({ message: "No Hotel Found" })}
-      else {res.status(200).json({ message: "Hotel Has deleted successfully !!" })};
-    } catch (error) {
-      res.status(400).json({ error: error.message });
+  try {
+    const deletehotel = await Hotel.findByIdAndDelete(req.params.HotelId);
+    if (!deletehotel) {
+      res.status(404).json({ message: "No Hotel Found" });
+    } else {
+      res.status(200).json({ message: "Hotel Has deleted successfully !!" });
     }
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
   // } else if (req.tokenData.role.name === "owner") {
   //   const ownerhotel = req.tokenData.id;
   //   const hotelOwner = await Hotel.find({ userId: ownerhotel });

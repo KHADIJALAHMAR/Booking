@@ -24,20 +24,23 @@ const getHotelsbyowner = async (req, res) => {
 
 // Create An Hotel
 const createHotel = async (req, res) => {
+  // res.json(req.tokenData);
+
   const images = [];
-  
+  console.log(req.body);
   req.files.map((file,index) => {
+
     images.push(file.originalname);
   })
 
   const createhotel = await Hotel.create({
     name: req.body.name,
-    descreption: req.body.descreption,
+    descreption: req.body.description,
     image_cover: images[0],
     images: images,
     stars: req.body.stars,
-    status: req.body.status,
-    userId: req.tokenData.id,
+    // status: req.body.status,
+    userId: req.tokenData._id,
   });
 
   try {
@@ -64,8 +67,11 @@ const updateHotel = async (req, res) => {
 const deleteHotel = async (req, res) => {
   try {
     const deletehotel = await Hotel.findByIdAndDelete(req.body.HotelId);
-    if (!deletehotel) res.status(404).json({ message: "No Hotel Found" });
-    res.json({ message: "Hotel was deleted with success !!" });
+    if (!deletehotel) {
+      res.status(404).json({ message: "No Hotel Found" })
+    }else {
+      res.json({ message: "Hotel was deleted with success !!" });
+    }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

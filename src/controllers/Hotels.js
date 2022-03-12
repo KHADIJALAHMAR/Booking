@@ -54,7 +54,7 @@ const createHotel = async (req, res) => {
 
 const updateHotel = async (req, res) => {
   try {
-    const updatehotel = await Hotel.findById(req.body.HotelId);
+    const updatehotel = await Hotel.findById(req.params.HotelId);
     Object.assign(updatehotel, req.body);
     updatehotel.save();
     res.status(201).json(updatehotel);

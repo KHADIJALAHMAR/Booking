@@ -161,6 +161,20 @@ const getHotelsByDate = (req, res) => {
   console.log(dateFrom, dateTo);
 };
 
+// Get hotel by id
+const getHotelById = async (req, res) => {
+  const HotelId = req.params.HotelId;
+  try {
+    await Hotel.findById(HotelId)
+      .exec()
+      .then((hotel) => {
+        res.status(200).json(hotel);
+      });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 // This Method used To not export all The Methods, so in this case,
 // we will use one method in route to filter by name city and stars
 
@@ -185,4 +199,5 @@ module.exports = {
   // getHotelsbyowner,
   getRoomsByPrice,
   getHotelsByDate,
+  getHotelById,
 };

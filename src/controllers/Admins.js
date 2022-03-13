@@ -47,12 +47,19 @@ const createUser = (req, res) => {
 };
 
 // update owner infos
-const updateUser = async (req, res) => {
+const updateUser = (req, res) => {
   try {
-    const user = await User.findById(req.params.userId);
-    Object.assign(user, req.body);
-    user.save();
-    res.json(user);
+    User.findByIdAndUpdate(
+      req.params.userId,
+      req.body.data,
+      (err, result) => {
+        if (err) {
+          res.status(400).json(err);
+        } else {
+          res.status(200).json(result);
+        }
+      }
+    );
   } catch (err) {
     res.json(err);
   }

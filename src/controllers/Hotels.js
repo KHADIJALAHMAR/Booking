@@ -29,14 +29,23 @@ const getHotels = async (req, res) => {
 
 // Create An Hotel
 const createHotel = async (req, res) => {
+  // res.json(req.tokenData);
+
+  const images = [];
+  console.log(req.body);
+  req.files.map((file,index) => {
+
+    images.push(file.originalname);
+  })
+
   const createhotel = await Hotel.create({
     name: req.body.name,
-    descreption: req.body.descreption,
-    image_cover: req.body.mage_cover,
-    images: req.body.images,
+    descreption: req.body.description,
+    image_cover: images[0],
+    images: images,
     stars: req.body.stars,
-    status: req.body.status,
-    userId: req.tokenData.id,
+    // status: req.body.status,
+    userId: req.tokenData._id,
   });
   try {
     res.json(createhotel);
@@ -76,26 +85,16 @@ const updateHotel = async (req, res) => {
 
 // Delete An Hotel
 const deleteHotel = async (req, res) => {
-  // if (req.tokenData.role.name === "admin") {
-    try {
-      const deletehotel = await Hotel.findByIdAndDelete(req.params.HotelId);
-      if ((!deletehotel)) { res.status(404).json({ message: "No Hotel Found" })}
-      else {res.status(200).json({ message: "Hotel Has deleted successfully !!" })};
-    } catch (error) {
-      res.status(400).json({ error: error.message });
+  try {
+    const deletehotel = await Hotel.findByIdAndDelete(req.body.HotelId);
+    if (!deletehotel) {
+      res.status(404).json({ message: "No Hotel Found" })
+    }else {
+      res.json({ message: "Hotel was deleted with success !!" });
     }
-  // } else if (req.tokenData.role.name === "owner") {
-  //   const ownerhotel = req.tokenData.id;
-  //   const hotelOwner = await Hotel.find({ userId: ownerhotel });
-
-  //   try {
-  //     const deletehotel = await Hotel.findByIdAndDelete(hotelOwner);
-  //     if (!deletehotel) res.status(404).json({ message: "No Hotel Found" });
-  //     res.json({ message: "Hotel Has deleted  successfully !!" });
-  //   } catch (error) {
-  //     res.status(400).json({ error: error.message });
-  //   }
-  // }
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
 
 ////////////////filters methods/////////////////

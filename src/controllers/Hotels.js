@@ -106,7 +106,7 @@ const updateHotel = async (req, res) => {
 const deleteHotel = async (req, res) => {
   // if (req.tokenData.role.name === "admin") {
   try {
-    const deletehotel = await Hotel.findByIdAndDelete(req.params.HotelId);
+    const deletehotel = await Hotel.findByIdAndDelete(req.body.HotelId);
     if (!deletehotel) {
       res.status(404).json({ message: "No Hotel Found" });
     } else {

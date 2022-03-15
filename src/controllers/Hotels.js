@@ -34,10 +34,9 @@ const createHotel = async (req, res) => {
 
   const images = [];
   console.log(req.body);
-  req.files.map((file,index) => {
-
+  req.files.map((file, index) => {
     images.push(file.originalname);
-  })
+  });
 
   const createhotel = await Hotel.create({
     name: req.body.name,
@@ -58,30 +57,49 @@ const createHotel = async (req, res) => {
 // Update An Hotel
 
 const updateHotel = async (req, res) => {
-  if (req.tokenData.role.name === "admin") {
-    try {
-      const updatehotelbyadmin = await Hotel.findById(req.params.id);
-
-      Object.assign(updatehotelbyadmin, req.body);
-      updatehotel.save();
-      res.status(201).json(updatehotelbyadmin);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  } else if (req.tokenData.role.name === "owner") {
-    const ownerhoteltoupdate = req.tokenData.id;
-    const hotelownertoupdate = await Hotel.find({ userId: ownerhoteltoupdate });
-    try {
-      const updatehotel = await Hotel.findById(hotelownertoupdate);
-      Object.assign(updatehotel, req.body);
-      updatehotel.save();
-      res.status(201).json(updatehotel);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  } else {
-    res.status(400).json({ error: "The Hotels is Not Yours !!" });
+  // if (req.tokenData.role.name === "admin") {
+  const infosUpdated = {
+    name: req.body.data.name,
+    descreption: req.body.data.descreption,
+    stars: parseInt(req.body.data.stars),
+  };
+  const hotelId = req.params.HotelId;
+  console.log(req.body.data, req.params.HotelId);
+  try {
+    Hotel.findByIdAndUpdate(hotelId, infosUpdated, (err, result) => {
+      if (err) {
+        res.status(400).json(err);
+      } else {
+        res.status(200).json(result);
+      }
+    });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
+
+  // try {
+  //   const updatehotelbyadmin = await Hotel.findById(req.params.id);
+
+  //   Object.assign(updatehotelbyadmin, req.body);
+  //   updatehotelbyadmin.save();
+  //   res.status(201).json(updatehotelbyadmin);
+  // } catch (error) {
+  //   res.status(500).json({ error: error.message });
+  // }
+  // } else if (req.tokenData.role.name === "owner") {
+  //   const ownerhoteltoupdate = req.tokenData.id;
+  //   const hotelownertoupdate = await Hotel.find({ userId: ownerhoteltoupdate });
+  //   try {
+  //     const updatehotel = await Hotel.findById(hotelownertoupdate);
+  //     Object.assign(updatehotel, req.body);
+  //     updatehotel.save();
+  //     res.status(201).json(updatehotel);
+  //   } catch (error) {
+  //     res.status(500).json({ error: error.message });
+  //   }
+  // } else {
+  //   res.status(400).json({ error: "The Hotels is Not Yours !!" });
+  // }
 };
 
 // Delete An Hotel

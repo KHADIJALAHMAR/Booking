@@ -35,18 +35,18 @@ const createRoom = (req, res) => {
 };
 
 const updateRoom = async (req, res) => {
-  console.log (req.params.roomId)
-  // const roomId = req.params.roomId;
-  // try {
-  //   await RoomsGroup.findByIdAndUpdate(roomId, req.body);
-  //   const roomsgroup = await RoomsGroup.findOne({ _id: roomId });
-  //   res.json({
-  //     message: "rooms group updated !!",
-  //     roomsgroup,
-  //   });
-  // } catch (error) {
-  //   res.status(500).json(error);
-  // }
+  const roomId = req.params.roomId;
+  try{
+  RoomsGroup.findByIdAndUpdate(roomId, req.body.data, (err, result) => {
+    if (err) {
+      res.status(400).json(err);
+    } else {
+      res.status(200).json(result);
+    }
+  });
+} catch (error) {
+  res.status(400).json({ error: error.message });
+}
 };
 
 const deleteRoom = async (req, res) => {

@@ -31,6 +31,7 @@ router
   .delete(Rooms.deleteRoom);
 router 
 .route("/room/:roomId")
+.get(Rooms.getRoomById)
 .put(Rooms.updateRoom)
 
 router

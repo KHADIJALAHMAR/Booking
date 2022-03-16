@@ -23,7 +23,12 @@ router.route("/")
 
 
 router.route("/:HotelId")
-.put(authorizeWithRole('admin', 'owner') ,Hotels.updateHotel)
+.put(
+  // authorizeWithRole('admin', 'owner') ,
+  Hotels.updateHotel)
+.get(
+  // authorizeWithRole('admin', 'owner') ,
+Hotels.getHotelById)
 .delete(
   // authorizeWithRole('admin', 'owner') ,
 Hotels.deleteHotel);

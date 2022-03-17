@@ -26,8 +26,11 @@ router
 
 router
   .route("/room")
-  .put(authorizeWithRole("owner"), Rooms.updateRoom)
-  .delete(authorizeWithRole("owner"), Rooms.deleteRoom);
+  .delete(Rooms.deleteRoom);
+router 
+.route("/room/:roomId")
+.get(Rooms.getRoomById)
+.put(Rooms.updateRoom)
 
 router
   .route("/booking/accept")

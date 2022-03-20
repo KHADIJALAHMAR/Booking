@@ -65,19 +65,37 @@ const deleteRoom = async (req, res) => {
 };
 
 // search for room with param
-const getRooms = (req, res) => {
-  const hotelId = req.body.hotelId;
-  try {
-    RoomType.find({ id_hotel: hotelId }, function (err, rooms) {
-      if (err) res.status(404).json({ err: err.message });
-      res.status(200).json({
-        rooms: rooms,
-      });
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
+const getRooms = (all) => {
+  return (req, res) => {
+    const hotelId = req.params.hotelId;
+    
+      if (all) {
+        try {
+          RoomsGroup.find({ id_hotel: hotelId }, function (err, rooms) {
+            if (err) res.status(404).json({ err: err.message });
+            res.status(200).json({
+              rooms: rooms,
+            });
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      }else if (!all) {
+        try {
+          RoomsGroup.find({}, function (err, rooms) {
+            if (err) res.status(404).json({ err: err.message });
+            res.status(200).json({
+              rooms: rooms,
+            });
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      
+  };
+}
+
 
 //
 const getRoomsByPrice = (req, res) => {};

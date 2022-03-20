@@ -54,6 +54,7 @@ const updateUser = (req, res) => {
       req.body.data,
       (err, result) => {
         if (err) {
+          console.log(err.message);
           res.status(400).json(err);
         } else {
           res.status(200).json(result);

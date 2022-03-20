@@ -9,12 +9,12 @@ const mongoose = require('mongoose');
 //Get the Hotels
 const getHotels = async (req, res) => {
   // if (req.tokenData.role.name === "admin") {
-    const hotels = await Hotel.find();
-    try {
-      res.json(hotels);
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
+  const hotels = await Hotel.find();
+  try {
+    res.json(hotels);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
   // } else if (req.tokenData.role.name === "owner") {
   //   const hotelowner = req.tokenData.id;
   //   const getownerhotel = await Hotel.find({ userId: hotelowner });
@@ -48,10 +48,9 @@ const createHotel = async (req, res) => {
 
   const images = [];
   console.log(req.body);
-  req.files.map((file,index) => {
-
+  req.files.map((file, index) => {
     images.push(file.originalname);
-  })
+  });
 
   const createhotel = await Hotel.create({
     name: req.body.name,
@@ -71,44 +70,76 @@ const createHotel = async (req, res) => {
 
 // Update An Hotel
 const updateHotel = async (req, res) => {
-  if (req.tokenData.role.name === "admin") {
-    try {
-      const updatehotelbyadmin = await Hotel.findById(req.params.id);
-
-      Object.assign(updatehotelbyadmin, req.body);
-      updatehotel.save();
-      res.status(201).json(updatehotelbyadmin);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  } else if (req.tokenData.role.name === "owner") {
-    const ownerhoteltoupdate = req.tokenData.id;
-    const hotelownertoupdate = await Hotel.find({ userId: ownerhoteltoupdate });
-    try {
-      const updatehotel = await Hotel.findById(hotelownertoupdate);
-      Object.assign(updatehotel, req.body);
-      updatehotel.save();
-      res.status(201).json(updatehotel);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  } else {
-    res.status(400).json({ error: "The Hotels is Not Yours !!" });
+  // if (req.tokenData.role.name === "admin") {
+  // const infosUpdated = {
+  //   name: req.body.data.name,
+  //   descreption: req.body.data.descreption,
+  //   stars: parseInt(req.body.data.stars),
+  // };
+  const hotelId = req.params.HotelId;
+  // console.log(req.body.data, req.params.HotelId);
+  try {
+    Hotel.findByIdAndUpdate(hotelId, req.body.data, (err, result) => {
+      if (err) {
+        res.status(400).json(err);
+      } else {
+        res.status(200).json(result);
+      }
+    });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
+
+  // try {
+  //   const updatehotelbyadmin = await Hotel.findById(req.params.id);
+
+  //   Object.assign(updatehotelbyadmin, req.body);
+  //   updatehotelbyadmin.save();
+  //   res.status(201).json(updatehotelbyadmin);
+  // } catch (error) {
+  //   res.status(500).json({ error: error.message });
+  // }
+  // } else if (req.tokenData.role.name === "owner") {
+  //   const ownerhoteltoupdate = req.tokenData.id;
+  //   const hotelownertoupdate = await Hotel.find({ userId: ownerhoteltoupdate });
+  //   try {
+  //     const updatehotel = await Hotel.findById(hotelownertoupdate);
+  //     Object.assign(updatehotel, req.body);
+  //     updatehotel.save();
+  //     res.status(201).json(updatehotel);
+  //   } catch (error) {
+  //     res.status(500).json({ error: error.message });
+  //   }
+  // } else {
+  //   res.status(400).json({ error: "The Hotels is Not Yours !!" });
+  // }
 };
 
 // Delete An Hotel
 const deleteHotel = async (req, res) => {
+  // if (req.tokenData.role.name === "admin") {
   try {
     const deletehotel = await Hotel.findByIdAndDelete(req.body.HotelId);
     if (!deletehotel) {
-      res.status(404).json({ message: "No Hotel Found" })
-    }else {
-      res.json({ message: "Hotel was deleted with success !!" });
+      res.status(404).json({ message: "No Hotel Found" });
+    } else {
+      res.status(200).json({ message: "Hotel Has deleted successfully !!" });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
+  // } else if (req.tokenData.role.name === "owner") {
+  //   const ownerhotel = req.tokenData.id;
+  //   const hotelOwner = await Hotel.find({ userId: ownerhotel });
+
+  //   try {
+  //     const deletehotel = await Hotel.findByIdAndDelete(hotelOwner);
+  //     if (!deletehotel) res.status(404).json({ message: "No Hotel Found" });
+  //     res.json({ message: "Hotel Has deleted  successfully !!" });
+  //   } catch (error) {
+  //     res.status(400).json({ error: error.message });
+  //   }
+  // }
 };
 
 ////////////////filters methods/////////////////
@@ -170,6 +201,20 @@ const getHotelsByDate = (req, res) => {
   console.log(dateFrom, dateTo);
 };
 
+// Get hotel by id
+const getHotelById = async (req, res) => {
+  const HotelId = req.params.HotelId;
+  try {
+    await Hotel.findById(HotelId)
+      .exec()
+      .then((hotel) => {
+        res.status(200).json(hotel);
+      });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 // This Method used To not export all The Methods, so in this case,
 // we will use one method in route to filter by name city and stars
 
@@ -194,4 +239,5 @@ module.exports = {
   getHotelsByOwner,
   getRoomsByPrice,
   getHotelsByDate,
+  getHotelById,
 };

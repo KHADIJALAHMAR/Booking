@@ -1,3 +1,4 @@
+const { Rooms } = require(".");
 const { RoomType,RoomsGroup} = require("../models");
 
 const createRoom = (req, res) => {
@@ -35,16 +36,17 @@ const createRoom = (req, res) => {
 
 const updateRoom = async (req, res) => {
   const roomId = req.params.roomId;
-  try {
-    await RoomsGroup.findByIdAndUpdate(roomId, req.body);
-    const roomsgroup = await RoomsGroup.findOne({ _id: roomId });
-    res.json({
-      message: "rooms group updated !!",
-      roomsgroup,
-    });
-  } catch (error) {
-    res.status(500).json(error);
-  }
+  try{
+  RoomsGroup.findByIdAndUpdate(roomId, req.body.data, (err, result) => {
+    if (err) {
+      res.status(400).json(err);
+    } else {
+      res.status(200).json(result);
+    }
+  });
+} catch (error) {
+  res.status(400).json({ error: error.message });
+}
 };
 
 const deleteRoom = async (req, res) => {
@@ -150,6 +152,21 @@ const updateRoomType = async (req, res) => {
   }
 };
 
+const getRoomById = async (req, res) => {
+  const roomId = req.params.roomId;
+  try {
+    RoomsGroup.findById(roomId, function(err, room) {
+      if (err) {
+        console.log(err.message);
+      }else {
+        res.status(200).json(room);
+      }
+    })
+  } catch (err) {
+    res.status(400).json({err: err.message})
+  }
+}
+
 module.exports = {
   createRoom,
   updateRoom,
@@ -160,4 +177,5 @@ module.exports = {
   getRoomType,
   deleteRoomType,
   updateRoomType,
+  getRoomById
 };

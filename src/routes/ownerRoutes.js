@@ -3,7 +3,7 @@ const router = express.Router();
 const { authorizeWithRole } = require("../middlewares/authorizeUser");
 
 // controller
-const { Owners, roomUpload, Rooms } = require("../controllers");
+const { Owners, roomUpload, Rooms, Hotels } = require("../controllers");
 
 // routes
 router
@@ -19,7 +19,6 @@ router.route("/banned").get(authorizeWithRole("admin"), Owners.getBannedOwners);
 router
   .route("/room")
   .post(
-    authorizeWithRole("owner"),
     roomUpload.array("room-image", 8),
     Rooms.createRoom
   );
@@ -39,6 +38,10 @@ router
 router
   .route("/booking/refuse")
   .put(authorizeWithRole("owner"), Owners.refuseBooking);
+
+router
+    .route("/:userId/hotels")
+    .get(Hotels.getHotelsByOwner(false));
 
 // route owner
 router.route("/")

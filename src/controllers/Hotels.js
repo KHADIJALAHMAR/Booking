@@ -1,4 +1,5 @@
 const { Hotel, Location, RoomsGroup, Booking } = require("../models");
+const mongoose = require('mongoose');
 
 // Get All The  Hotels acess by admin
 // const getHotels = async (req, res) => {
@@ -27,12 +28,25 @@ const getHotels = async (req, res) => {
   // }
 };
 
+// get hotels by ownerId
+const getHotelsByOwner = () => {
+  return async (req,res) => {
+    const hotelowner = req.params.userId;
+    const getownerhotel = await Hotel.find({ userId: hotelowner });
+    try {
+      res.status(200).json(getownerhotel);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+}
+ 
+
 // Create An Hotel
 const createHotel = async (req, res) => {
   // res.json(req.tokenData);
 
   const images = [];
-  console.log(req.body);
   req.files.map((file, index) => {
     images.push(file.originalname);
   });
@@ -43,8 +57,7 @@ const createHotel = async (req, res) => {
     image_cover: images[0],
     images: images,
     stars: req.body.stars,
-    // status: req.body.status,
-    userId: req.tokenData._id,
+    userId: req.body.userId,
   });
   try {
     res.json(createhotel);
@@ -54,7 +67,6 @@ const createHotel = async (req, res) => {
 };
 
 // Update An Hotel
-
 const updateHotel = async (req, res) => {
   // if (req.tokenData.role.name === "admin") {
   // const infosUpdated = {
@@ -222,7 +234,7 @@ module.exports = {
   createHotel,
   updateHotel,
   getHotelsByName,
-  // getHotelsbyowner,
+  getHotelsByOwner,
   getRoomsByPrice,
   getHotelsByDate,
   getHotelById,

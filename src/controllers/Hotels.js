@@ -8,7 +8,6 @@ const { Hotel, Location, RoomsGroup, Booking } = require("../models");
 //Get the Hotels
 const getHotels = async (req, res) => {
   // if (req.tokenData.role.name === "admin") {
-  console.log(req.params.HotelId);
   const hotels = await Hotel.find();
   try {
     res.json(hotels);
@@ -58,15 +57,15 @@ const createHotel = async (req, res) => {
 
 const updateHotel = async (req, res) => {
   // if (req.tokenData.role.name === "admin") {
-  const infosUpdated = {
-    name: req.body.data.name,
-    descreption: req.body.data.descreption,
-    stars: parseInt(req.body.data.stars),
-  };
+  // const infosUpdated = {
+  //   name: req.body.data.name,
+  //   descreption: req.body.data.descreption,
+  //   stars: parseInt(req.body.data.stars),
+  // };
   const hotelId = req.params.HotelId;
-  console.log(req.body.data, req.params.HotelId);
+  // console.log(req.body.data, req.params.HotelId);
   try {
-    Hotel.findByIdAndUpdate(hotelId, infosUpdated, (err, result) => {
+    Hotel.findByIdAndUpdate(hotelId, req.body.data, (err, result) => {
       if (err) {
         res.status(400).json(err);
       } else {

@@ -72,6 +72,7 @@ const getRooms = (all) => {
     const hotelId = req.params.hotelId;
     
       if (all) {
+        console.log('getrooms');
         try {
           RoomsGroup.find({ id_hotel: hotelId }, function (err, rooms) {
             if (err) res.status(404).json({ err: err.message });
@@ -123,6 +124,7 @@ const createRoomType = async (req, res) => {
 };
 
 const getRoomType = async (req, res) => {
+  console.log('getroomtype');
   try {
     const roomType = await RoomType.find();
     res.status(201).json(roomType);

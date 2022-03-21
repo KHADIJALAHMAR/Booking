@@ -12,8 +12,8 @@ router
   .route("/")
   .get( Hotels.getHotels)
   .post(
-    authorizeToken ,
-    // hotelUpload.array("hotel-image", 8),
+    
+    hotelUpload.array("hotel-image", 8),
     Hotels.createHotel);
 
 

@@ -47,7 +47,6 @@ const createHotel = async (req, res) => {
   // res.json(req.tokenData);
 
   const images = [];
-  console.log(req.body);
   req.files.map((file, index) => {
     images.push(file.originalname);
   });
@@ -58,8 +57,7 @@ const createHotel = async (req, res) => {
     image_cover: images[0],
     images: images,
     stars: req.body.stars,
-    // status: req.body.status,
-    userId: req.tokenData._id,
+    userId: req.body.userId,
   });
   try {
     res.json(createhotel);

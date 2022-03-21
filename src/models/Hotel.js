@@ -12,12 +12,10 @@ const HotelSchema = new mongoose.Schema({
         required: true
     },
     images:[{
-        data: Buffer,
-        contentType: String,
+        type: String,
     }],
     image_cover:{
-        data: Buffer,
-        contentType: String,
+        type: String,
     },
     stars :{
         type: Number,

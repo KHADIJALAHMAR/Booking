@@ -193,10 +193,28 @@ const getRoomsByPrice = (req, res) => {
 
 // Fillter Hotels By Date
 const getHotelsByDate = (req, res) => {
-  const dateFrom = req.body.dateFrom;
-  const dateTo = req.body.dateTo;
+  const dateFrom = new Date(req.body.dateFrom); //12
+  const dateTo = new Date(req.body.dateTo); //15
 
-  console.log(dateFrom, dateTo);
+  Booking.find(
+    {
+      $and: [
+        {
+          $or: [
+            { date_from: { $lt: dateFrom } },
+            { date_from: { $gt: dateTo } },
+          ],
+        },
+        { $or: [{ date_to: { $gt: dateTo } }, { date_to: { $lt: dateFrom } }] },
+      ],
+    },
+    function (err, data) {
+      if (err) console.log(err);
+      if (data) {
+        res.json({ data });
+      }
+    }
+  );
 };
 
 // Get hotel by id

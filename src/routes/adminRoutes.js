@@ -11,7 +11,10 @@ const { Admins, Owners, Customers, Users } = require("../controllers");
 
 router.route("/owner/create").post(Admins.createUser);
 
-router.route("/owner/owners").get(authorizeWithRole("admin"), Owners.getOwners);
+router.route("/owner/owners")
+.get(
+  // authorizeWithRole("admin"),
+Owners.getOwners);
 
 router
   .route("/owner/update/:userId")

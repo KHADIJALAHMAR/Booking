@@ -12,8 +12,8 @@ router
   .route("/")
   .get( Hotels.getHotels)
   .post(
-    authorizeToken ,
-    // hotelUpload.array("hotel-image", 8),
+    
+    hotelUpload.array("hotel-image", 8),
     Hotels.createHotel);
 
 
@@ -56,6 +56,9 @@ router.route("/filterByName")
 
 // router.route("/filterByStars")
 // .post(Hotels.getHotelsByStars);
+
+router.route("/hotelByDate")
+.post(Hotels.getHotelsByDate);
 
 
 // router.route("/search")

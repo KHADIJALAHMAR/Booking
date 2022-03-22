@@ -5,10 +5,6 @@ const {
   returnMessageAsResponse,
 } = require("../functions/index");
 
-
-
-
-
 // create an owner
 const createUser = (req, res) => {
   const infos = {
@@ -54,12 +50,13 @@ const updateUser = (req, res) => {
       req.body.data,
       (err, result) => {
         if (err) {
+          console.log(err.message);
           res.status(400).json(err);
         } else {
           res.status(200).json(result);
         }
       }
-    );
+    });
   } catch (err) {
     res.json(err);
   }
@@ -118,5 +115,5 @@ module.exports = {
   refuseHotel,
   getBannedUsers,
   getAcceptedHotels,
-  getRefusedHotels
+  getRefusedHotels,
 };

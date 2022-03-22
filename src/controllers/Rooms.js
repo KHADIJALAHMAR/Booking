@@ -11,10 +11,10 @@ const createRoom = (req, res) => {
     images: [],
   };
 
-  req.files.map((file, index) => {
-    room.images.push(file.originalname);
-  });
-
+  // req.files.map((file, index) => {
+  //   room.images.push(file.originalname);
+  // });
+  console.log(room);
   try {
     (async () => {
       await new RoomsGroup({

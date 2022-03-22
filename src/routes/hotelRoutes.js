@@ -20,6 +20,9 @@ router
 router.route("/") 
 .get(authorizeWithRole('admin', 'owner'),Hotels.getHotels)
 .post(authorizeWithRole('admin', 'owner') ,Hotels.createHotel)
+.delete(
+  // authorizeWithRole('admin', 'owner') ,
+Hotels.deleteHotel);
 
 
 router.route("/:HotelId")
@@ -29,9 +32,7 @@ router.route("/:HotelId")
 .get(
   // authorizeWithRole('admin', 'owner') ,
 Hotels.getHotelById)
-.delete(
-  // authorizeWithRole('admin', 'owner') ,
-Hotels.deleteHotel);
+
 
 
 router.route("/accepted") 

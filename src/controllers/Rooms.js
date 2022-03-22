@@ -103,7 +103,6 @@ const getRooms = (all) => {
 //
 const getRoomsByPrice = (req, res) => {};
 
-
 const createRoomType = async (req, res) => {
   let roomType = {
     name: req.body.name,

@@ -7,7 +7,6 @@ const authorizeToken = async (req,res,next) => {
     }else {
         try {
             const user =  await jwt.verify(token, process.env.JWT_ACCESS_SECRET)
-    
             req.tokenData = await {id: user.id , role: user.role};
             
             next()

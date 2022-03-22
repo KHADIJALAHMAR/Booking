@@ -134,18 +134,24 @@ const getRoomType = async (req, res) => {
 };
 
 const deleteRoomType = async (req, res) => {
-  try {
-    await RoomType.deleteOne(req.body.id);
 
-    res.json("DELETE Room Type");
+  const roomTypeId = req.body.id;
+  console.log(roomTypeId)
+  try {
+    const roomTypeDeleted = await RoomType.findByIdAndDelete(roomTypeId);
+    if (!roomTypeDeleted) {
+      res.json({ message: "ERROR!" });
+    } else {
+      res.json({ message: "RoomeType deleted successfully!" });
+    }
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    console.log(error);
   }
 };
 
 const updateRoomType = async (req, res) => {
   try {
-    const roomType = await RoomType.findById(req.body.roomTypeId);
+    const roomType = await RoomType.findById(req.body.id);
     Object.assign(roomType, req.body);
     roomType.save();
     res.json(roomType);

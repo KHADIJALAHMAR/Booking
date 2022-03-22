@@ -45,16 +45,12 @@ const createUser = (req, res) => {
 // update owner infos
 const updateUser = (req, res) => {
   try {
-    User.findByIdAndUpdate(
-      req.params.userId,
-      req.body.data,
-      (err, result) => {
-        if (err) {
-          console.log(err.message);
-          res.status(400).json(err);
-        } else {
-          res.status(200).json(result);
-        }
+    User.findByIdAndUpdate(req.params.userId, req.body.data, (err, result) => {
+      if (err) {
+        console.log(err.message);
+        res.status(400).json(err);
+      } else {
+        res.status(200).json(result);
       }
     });
   } catch (err) {

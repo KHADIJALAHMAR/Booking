@@ -1,4 +1,4 @@
-const { Rooms } = require(".");
+
 const { RoomType,RoomsGroup} = require("../models");
 
 const createRoom = (req, res) => {
@@ -149,14 +149,18 @@ const deleteRoomType = async (req, res) => {
 };
 
 const updateRoomType = async (req, res) => {
-  try {
-    const roomType = await RoomType.findById(req.body.id);
-    Object.assign(roomType, req.body);
-    roomType.save();
-    res.json(roomType);
-  } catch (err) {
-    res.status(400).json({ err: err.message });
-  }
+  const roomId = req.body.data.roomId;
+  try{
+    RoomType.findByIdAndUpdate(roomId, req.body.data.name, (err, result) => {
+    if (err) {
+      res.status(400).json(err);
+    } else {
+      res.status(200).json(result);
+    }
+  });
+} catch (error) {
+  res.status(400).json({ error: error.message });
+}
 };
 
 const getRoomById = async (req, res) => {

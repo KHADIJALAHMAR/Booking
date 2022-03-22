@@ -75,7 +75,7 @@ const updateHotel = async (req, res) => {
   //   stars: parseInt(req.body.data.stars),
   // };
   const hotelId = req.params.HotelId;
-  // console.log(req.body.data, req.params.HotelId);
+  console.log(req.body.data, req.params.HotelId);
   try {
     Hotel.findByIdAndUpdate(hotelId, req.body.data, (err, result) => {
       if (err) {

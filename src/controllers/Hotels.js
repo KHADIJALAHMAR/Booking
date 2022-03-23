@@ -49,11 +49,12 @@ const createHotel = async (req, res) => {
   const images = [];
   req.files.map((file, index) => {
     images.push(file.originalname);
-  });
+  }
+  );
 
   const createhotel = await Hotel.create({
     name: req.body.name,
-    descreption: req.body.description,
+    descreption: req.body.descreption,
     image_cover: images[0],
     images: images,
     stars: req.body.stars,
@@ -256,4 +257,5 @@ module.exports = {
   getRoomsByPrice,
   getHotelsByDate,
   getHotelById,
-};
+  getHotelsByStars 
+}

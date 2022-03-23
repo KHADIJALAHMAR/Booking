@@ -15,12 +15,12 @@ const locationSchema = new mongoose.Schema({
         maxlength:[60 , 'should not be more than 45 length'],
         required: true,
     },
-    coordinats :{
-        type: String,
-        minlength:[6 ,'should be atleast of 6 length'],
-        maxlength:[200 , 'should not be more than 145 length'],
-        required: true,
-    },
+    // coordinats :{
+    //     type: String,
+    //     minlength:[6 ,'should be atleast of 6 length'],
+    //     maxlength:[200 , 'should not be more than 145 length'],
+    //     required: true,
+    // },
     });
     const location = mongoose.model("location",  locationSchema);
 

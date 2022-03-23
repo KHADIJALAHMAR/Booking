@@ -1,5 +1,5 @@
 const { Hotel, Location, RoomsGroup, Booking } = require("../models");
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 // Get All The  Hotels acess by admin
 // const getHotels = async (req, res) => {
@@ -30,7 +30,7 @@ const getHotels = async (req, res) => {
 
 // get hotels by ownerId
 const getHotelsByOwner = () => {
-  return async (req,res) => {
+  return async (req, res) => {
     const hotelowner = req.params.userId;
     const getownerhotel = await Hotel.find({ userId: hotelowner });
     try {
@@ -38,32 +38,65 @@ const getHotelsByOwner = () => {
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
-  }
-}
- 
+  };
+};
 
 // Create An Hotel
 const createHotel = async (req, res) => {
   // res.json(req.tokenData);
 
-  const images = [];
-  req.files.map((file, index) => {
-    images.push(file.originalname);
-  });
+  // const images = [];
+  // req.files.map((file, index) => {
+  //   images.push(file.originalname);
+  // });
+  const infosLocation = {
+    city: req.body.city,
+    address: req.body.address,
+  };
 
-  const createhotel = await Hotel.create({
-    name: req.body.name,
-    descreption: req.body.description,
-    image_cover: images[0],
-    images: images,
-    stars: req.body.stars,
-    userId: req.body.userId,
-  });
-  try {
-    res.json(createhotel);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
+  const createLocation = await Location.create(infosLocation).then(
+    (response) => {
+      Location.find({
+        city: infosLocation.city,
+        address: infosLocation.address,
+      });
+      if (!response) console.log("ERROR!");
+      console.log(response._id);
+      try {
+        Hotel.create(
+          {
+            name: req.body.name,
+            descreption: req.body.descreption,
+            // image_cover: images[0],
+            // images: images,
+            stars: req.body.stars,
+            userId: req.body.userId,
+            locationId: response._id,
+          },
+          function (err, result) {
+            if (err) console.log(err.message);
+            console.log("HOTEL CREATED SUCCECCFULLY !");
+          }
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  );
+
+  // const createhotel = await Hotel.create({
+  //   name: req.body.name,
+  //   descreption: req.body.description,
+  //   // image_cover: images[0],
+  //   // images: images,
+  //   stars: req.body.stars,
+  //   userId: req.body.userId,
+  // });
+  // try {
+  //   res.json(createhotel);
+  // } catch (error) {
+  //   res.status(400).json({ error: error.message });
+  // }
 };
 
 // Update An Hotel

@@ -16,6 +16,8 @@ const createUser = (req, res) => {
     role: req.body.role,
   };
 
+  // console.table(infos)
+
   if (infos.password !== infos.repeated_password) {
     returnErrorAsResponse(res, "passwords are not Identical");
   }
@@ -45,16 +47,12 @@ const createUser = (req, res) => {
 // update owner infos
 const updateUser = (req, res) => {
   try {
-    User.findByIdAndUpdate(
-      req.params.userId,
-      req.body.data,
-      (err, result) => {
-        if (err) {
-          console.log(err.message);
-          res.status(400).json(err);
-        } else {
-          res.status(200).json(result);
-        }
+    User.findByIdAndUpdate(req.params.userId, req.body.data, (err, result) => {
+      if (err) {
+        console.log(err.message);
+        res.status(400).json(err);
+      } else {
+        res.status(200).json(result);
       }
     );
   } catch (err) {

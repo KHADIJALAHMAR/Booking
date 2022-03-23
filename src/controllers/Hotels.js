@@ -61,7 +61,6 @@ const createHotel = async (req, res) => {
         address: infosLocation.address,
       });
       if (!response) console.log("ERROR!");
-      console.log(response._id);
       try {
         Hotel.create(
           {
@@ -75,7 +74,9 @@ const createHotel = async (req, res) => {
           },
           function (err, result) {
             if (err) console.log(err.message);
-            console.log("HOTEL CREATED SUCCECCFULLY !");
+            if (result) {
+              res.json({ message: "HOTEL CREATED SUCCECCFULLY!" });
+            }
           }
         );
       } catch (error) {

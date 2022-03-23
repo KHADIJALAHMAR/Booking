@@ -174,14 +174,15 @@ const getHotelsByName = async (req, res) => {
 // Filtre Hotels By City
 const getHotelsByCity = async (req, res) => {
   try {
-    const hotelbycity = await Hotel.find({ city: req.body.city })
+    const hotelbycity = await Hotel.find({ city: req.body.city.city })
       .populate("locationId", "city address")
       .exec();
     hotelbycity.map((item) => {
-      if (req.body.city === item.locationId.city) {
+      if (req.body.city.city === item.locationId.city) {
+        // console.log(item);
         res.json(item);
       }
-      if (!req.body.city === item.locationId.city) {
+      if (!req.body.city.city === item.locationId.city) {
         res.json({ message: "There is no hotels in this city" });
       }
     });

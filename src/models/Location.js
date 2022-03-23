@@ -5,7 +5,7 @@ const mongoose =require('mongoose');
 const locationSchema = new mongoose.Schema({
     city :{
         type: String,
-        minlength:[6 ,'should be atleast of 6 length'],
+        minlength:[4 ,'should be atleast of 6 length'],
         maxlength:[14 , 'should not be more than 36 length'],
         required: true,
     },

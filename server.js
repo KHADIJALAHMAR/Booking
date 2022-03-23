@@ -36,7 +36,7 @@ app.get("/", (req, res) => {
 });
 
 // Authentification Route
-app.use("/auth", authentificationRoutes);
+// app.use("/auth", authentificationRoutes);
 
 // Authorize Middleware
 // app.use(authorizeToken);

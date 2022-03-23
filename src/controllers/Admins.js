@@ -16,6 +16,8 @@ const createUser = (req, res) => {
     role: req.body.role,
   };
 
+  // console.table(infos)
+
   if (infos.password !== infos.repeated_password) {
     returnErrorAsResponse(res, "passwords are not Identical");
   }

@@ -30,6 +30,11 @@ const HotelSchema = new mongoose.Schema({
         required: true,
         ref : "User"
     },
+    locationId:{
+        type:mongoose.Schema.Types.ObjectId,
+        required:true,
+        ref:"location"
+    }
 } );
 
 HotelSchema.pre('remove', function(next) {

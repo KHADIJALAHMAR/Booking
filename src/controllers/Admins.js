@@ -54,11 +54,12 @@ const updateUser = (req, res) => {
       } else {
         res.status(200).json(result);
       }
-    });
+    }
+    );
   } catch (err) {
     res.json(err);
   }
-};
+}
 
 // delete owner
 const deleteUser = (req, res) => {

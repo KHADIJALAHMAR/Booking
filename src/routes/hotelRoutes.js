@@ -48,8 +48,8 @@ router.route("/filterByName")
 .post(Hotels.getHotelsByName);
 
 
-// router.route("/filterByCity")   
-// .post(Hotels.getHotelsByCity);
+router.route("/filterByCity")   
+.post(Hotels.getHotelsByCity);
 
 
 // router.route("/filterByStars")

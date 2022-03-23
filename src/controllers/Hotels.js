@@ -54,50 +54,34 @@ const createHotel = async (req, res) => {
     address: req.body.address,
   };
 
-  const createLocation = await Location.create(infosLocation).then(
-    (response) => {
-      Location.find({
-        city: infosLocation.city,
-        address: infosLocation.address,
-      });
-      if (!response) console.log("ERROR!");
-      try {
-        Hotel.create(
-          {
-            name: req.body.name,
-            descreption: req.body.descreption,
-            // image_cover: images[0],
-            // images: images,
-            stars: req.body.stars,
-            userId: req.body.userId,
-            locationId: response._id,
-          },
-          function (err, result) {
-            if (err) console.log(err.message);
-            if (result) {
-              res.json({ message: "HOTEL CREATED SUCCECCFULLY!" });
-            }
+  await Location.create(infosLocation).then((response) => {
+    Location.find({
+      city: infosLocation.city,
+      address: infosLocation.address,
+    });
+    if (!response) console.log("ERROR!");
+    try {
+      Hotel.create(
+        {
+          name: req.body.name,
+          descreption: req.body.descreption,
+          // image_cover: images[0],
+          // images: images,
+          stars: req.body.stars,
+          userId: req.body.userId,
+          locationId: response._id,
+        },
+        function (err, result) {
+          if (err) console.log(err.message);
+          if (result) {
+            res.json({ message: "HOTEL CREATED SUCCECCFULLY!" });
           }
-        );
-      } catch (error) {
-        console.log(error);
-      }
+        }
+      );
+    } catch (error) {
+      console.log(error);
     }
-  );
-
-  // const createhotel = await Hotel.create({
-  //   name: req.body.name,
-  //   descreption: req.body.description,
-  //   // image_cover: images[0],
-  //   // images: images,
-  //   stars: req.body.stars,
-  //   userId: req.body.userId,
-  // });
-  // try {
-  //   res.json(createhotel);
-  // } catch (error) {
-  //   res.status(400).json({ error: error.message });
-  // }
+  });
 };
 
 // Update An Hotel
@@ -190,11 +174,17 @@ const getHotelsByName = async (req, res) => {
 // Filtre Hotels By City
 const getHotelsByCity = async (req, res) => {
   try {
-    const hotelbycity = await Location.find({ city: req.body.city })
-      .populate("hotel_id", "name")
+    const hotelbycity = await Hotel.find({ city: req.body.city })
+      .populate("locationId", "city address")
       .exec();
-    if (!hotelbycity) res.status(404).json({ message: "hotel not found" });
-    res.status(200).json(hotelbycity);
+    hotelbycity.map((item) => {
+      if (req.body.city === item.locationId.city) {
+        res.json(item);
+      }
+      if (!req.body.city === item.locationId.city) {
+        res.json({ message: "There is no hotels in this city" });
+      }
+    });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -290,4 +280,6 @@ module.exports = {
   getRoomsByPrice,
   getHotelsByDate,
   getHotelById,
+  getHotelsByStars,
+  getHotelsByCity,
 };

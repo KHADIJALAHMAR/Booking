@@ -171,13 +171,10 @@ const getHotelsByStars = async (req, res) => {
 
   const star = req.body.stars;
   try{
-     Hotel.find({stars: star}).sort({'stars':-1}).exec(function(err,rsault){
-          if(rsault){
-            res.status(200).json(rsault)
-          }else{
-            res.status(400).json({err: err.message})
-          }
-      })
+    Hotel.find({ stars: { $lte: star } }).sort({"stars" :-1}).then((data)=>{
+      res.status(200).json(data)
+    })
+  
   }catch(error){
      res.status(400).json({ error: error.message });
   }

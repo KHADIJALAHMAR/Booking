@@ -167,16 +167,23 @@ const getHotelsByCity = async (req, res) => {
 };
 
 // Filter Hotels By Stars
-const getHotelsByStars = (req, res) => {
-  const star = req.body.name;
-  if (star && star >= 0 && star <= 5 && typeof star === "number") {
-    Hotel.where({ star: star }).then(() => {
-      res.json();
-    });
-  } else {
-    res.status(400).send();
+const getHotelsByStars = async (req, res) => {
+
+  const star =(req.body.stars.stars);
+  console.log(star)
+  try{
+    Hotel.find({ stars: { $lte: star } }).sort({"stars" :-1})
+    .then((data)=>{
+      res.status(200).json(data)
+    })
+  
+  }catch(error){
+     res.status(400).json({ error: error.message });
   }
-};
+}
+
+
+
 
 const getRoomsByPrice = (req, res) => {
   RoomsGroup.find({ price: req.body.price })
@@ -256,4 +263,5 @@ module.exports = {
   getRoomsByPrice,
   getHotelsByDate,
   getHotelById,
+  getHotelsByStars
 };

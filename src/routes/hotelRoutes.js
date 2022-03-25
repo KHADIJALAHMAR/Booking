@@ -51,7 +51,9 @@ router.route("/filterByName")
 // router.route("/filterByCity")   
 // .post(Hotels.getHotelsByCity);
 
-
+router.route("/filterByStars")
+.post(Hotels.getHotelsByStars)
+// .get(Hotels.getHotelsByStars)
 // router.route("/filterByStars")
 // .post(Hotels.getHotelsByStars);
 

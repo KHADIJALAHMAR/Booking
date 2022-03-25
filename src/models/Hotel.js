@@ -18,8 +18,8 @@ const HotelSchema = new mongoose.Schema({
         type: String,
     },
     stars :{
-        type: Number,
-        default: 0
+        type: String,
+        // default: 0
     },
     status :{
         type: Boolean, 

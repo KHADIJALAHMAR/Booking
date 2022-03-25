@@ -169,9 +169,11 @@ const getHotelsByCity = async (req, res) => {
 // Filter Hotels By Stars
 const getHotelsByStars = async (req, res) => {
 
-  const star = req.body.stars;
+  const star =(req.body.stars.stars);
+  console.log(star)
   try{
-    Hotel.find({ stars: { $lte: star } }).sort({"stars" :-1}).then((data)=>{
+    Hotel.find({ stars: { $lte: star } }).sort({"stars" :-1})
+    .then((data)=>{
       res.status(200).json(data)
     })
   
